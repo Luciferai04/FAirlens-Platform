@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException
 import os
 
 from auth import require_role
-from ..db import db
+from db import db
 
 router = APIRouter()
 

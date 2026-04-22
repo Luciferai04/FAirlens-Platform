@@ -29,11 +29,11 @@ const sevStyle = (sev: string) => {
 
 // ── Fallback Data (renders if API is down) ─────────────────────────────────
 const FALLBACK_MODELS = [
-  { model_id: "loan-approval-v2", name: "Loan Origination v4.2", equity_score: 0.72, passed: false, violations_count: 2 },
-  { model_id: "resume-screen-v3", name: "Resume Screening", equity_score: 0.92, passed: true, violations_count: 0 },
-  { model_id: "icu-triage-v1", name: "ICU Triage Priority", equity_score: 0.58, passed: false, violations_count: 4 },
-  { model_id: "credit-scoring-v5", name: "Credit Scorer Baseline", equity_score: 0.88, passed: true, violations_count: 0 },
-  { model_id: "content-rec-v2", name: "Content Feed Ranking", equity_score: 0.79, passed: false, violations_count: 1 },
+  { model_id: "loan-approval-v2", name: "Loan Origination v4.2", equity_score: 0.72, passed: false, violations_count: 2, ebi_score: 54 },
+  { model_id: "resume-screen-v3", name: "Resume Screening", equity_score: 0.92, passed: true, violations_count: 0, ebi_score: 88 },
+  { model_id: "icu-triage-v1", name: "ICU Triage Priority", equity_score: 0.58, passed: false, violations_count: 4, ebi_score: 42 },
+  { model_id: "credit-scoring-v5", name: "Credit Scorer Baseline", equity_score: 0.88, passed: true, violations_count: 0, ebi_score: 91 },
+  { model_id: "content-rec-v2", name: "Content Feed Ranking", equity_score: 0.79, passed: false, violations_count: 1, ebi_score: 76 },
 ];
 
 const FALLBACK_INCIDENTS = [

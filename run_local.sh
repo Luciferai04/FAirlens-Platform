@@ -3,6 +3,11 @@
 
 echo "🚀 Starting FairLens in Local Mode (No GCP required)..."
 
+# Kill anything on 8080 or 5173 to prevent address in use errors
+echo "🧹 Clearing ports..."
+lsof -ti:8080 | xargs kill -9 2>/dev/null
+lsof -ti:5173 | xargs kill -9 2>/dev/null
+
 # Ensure database is seeded
 echo "📦 Checking local database..."
 python3 scripts/seed_local_db.py
@@ -12,7 +17,7 @@ echo "⚡ Starting backend (FastAPI)..."
 export LOCAL_MODE=true
 export DEV_MODE=true
 cd console/backend
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload &
+uvicorn main:app --host 0.0.0.0 --port 8080 --reload &
 BACKEND_PID=$!
 cd ../..
 

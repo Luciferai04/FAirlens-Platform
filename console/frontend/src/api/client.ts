@@ -77,6 +77,8 @@ export interface ModelSummary {
   violations_count: number;
   last_audited: string;
   triggered_by: string;
+  ebi_score?: number;
+  risk_tier?: string;
 }
 
 export interface AuditReport {

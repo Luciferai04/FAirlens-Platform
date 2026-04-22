@@ -6,7 +6,10 @@ from typing import Optional, List, Dict
 from datetime import datetime
 
 LOCAL_MODE = os.getenv("LOCAL_MODE", "true").lower() == "true"
-DB_PATH = Path(__file__).parent.parent.parent / "local_data" / "fairlens.db"
+# Try relative to this file (Docker/Standalone) or root (Repo)
+DB_PATH = Path(__file__).parent / "local_data" / "fairlens.db"
+if not DB_PATH.exists():
+    DB_PATH = Path(__file__).parent.parent.parent / "local_data" / "fairlens.db"
 
 class FairLensDB:
     """

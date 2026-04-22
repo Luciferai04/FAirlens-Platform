@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import random
 
 from auth import require_role
-from ..db import db
+from db import db
 
 router = APIRouter()
 DEV_MODE = os.getenv("DEV_MODE", "false").lower() == "true" or os.getenv("FAIRLENS_DEV_MODE", "") == "true"
