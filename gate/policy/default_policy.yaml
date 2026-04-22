@@ -1,0 +1,38 @@
+# FairLens Default Fairness Policy
+# Override per-model by providing --policy path in gate invocation
+version: "1.0"
+mode: block        # block | warn  (warn logs but doesn't fail the build)
+
+thresholds:
+  # Demographic Parity: max positive rate gap between groups
+  demographic_parity_difference: 0.10    # ≤ 10% gap
+
+  # Equalized Odds: max TPR/FPR gap between groups
+  equalized_odds_difference: 0.10        # ≤ 10% gap
+
+  # Disparate Impact Ratio: min(rate)/max(rate) across groups
+  # Based on EEOC 4/5ths rule — ratio below 0.80 indicates adverse impact
+  # Reference: Uniform Guidelines on Employee Selection Procedures (29 CFR 1607)
+  disparate_impact_ratio: 0.80           # ≥ 80% (violation if below)
+
+  # Calibration Error: max PPV gap between groups
+  calibration_error: 0.05                # ≤ 5% calibration error
+
+  # Theil Index: entropy-based inequality measure
+  theil_index: 0.10                      # ≤ 0.10
+
+  # Statistical Parity: alias for DPD (regulatory compat)
+  statistical_parity_difference: 0.10
+
+  # Average Odds: mean of TPR and FPR differences
+  average_odds_difference: 0.10
+
+  # Equal Opportunity: TPR gap between groups
+  equal_opportunity_difference: 0.10
+
+# Sector presets — uncomment to apply stricter thresholds
+# preset: eeoc_hiring          # stricter disparate_impact_ratio: 0.80
+# preset: eu_ai_act_credit     # stricter demographic_parity_difference: 0.05
+# preset: healthcare_triage    # stricter equalized_odds_difference: 0.05
+
+protected_attributes: []  # populated per model at registration

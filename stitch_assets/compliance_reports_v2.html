@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens - Compliance Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "tertiary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary-fixed-dim": "#61dbb4",
+                        "on-primary-container": "#003024",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-container": "#2a2a2a",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface": "#131313",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#b4b5b5",
+                        "primary-container": "#12a480",
+                        "inverse-primary": "#006c52",
+                        "on-tertiary": "#303030",
+                        "primary": "#61dbb4",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-surface-variant": "#bccac2",
+                        "surface-tint": "#61dbb4",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-container": "#454747",
+                        "error": "#ffb4ab",
+                        "on-primary": "#00382a",
+                        "primary-fixed": "#7ff8cf",
+                        "on-secondary": "#2f3131",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-background": "#e5e2e1",
+                        "outline-variant": "#3d4a44",
+                        "tertiary": "#c8c6c5",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-container": "#929090",
+                        "surface-container": "#201f1f",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "background": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed-variant": "#00513d",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#002117",
+                        "secondary": "#c6c6c6",
+                        "outline": "#86948d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "container-max": "1200px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "code": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "code": ["14px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "h3": ["20px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "h2": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-[#0d0d0d] text-on-surface font-body-md min-h-screen flex">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-[240px] border-r border-[#2f2f2f] bg-[#171717] flex flex-col py-6 space-y-2 z-40 hidden md:flex">
+<div class="px-6 mb-8 flex flex-col">
+<span class="text-white font-semibold font-['Inter'] text-lg">Governance Console</span>
+<span class="text-sm font-medium font-['Inter'] text-[#b4b4b4] mt-1">Enterprise Tier</span>
+</div>
+<nav class="flex-1 flex flex-col">
+<!-- Inactive -->
+<a class="flex items-center space-x-3 px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out text-sm font-medium font-['Inter']" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center space-x-3 px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out text-sm font-medium font-['Inter']" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Model Registry</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center space-x-3 px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out text-sm font-medium font-['Inter']" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+<span>Incidents</span>
+</a>
+<!-- Active -->
+<a class="flex items-center space-x-3 px-6 py-3 text-white border-l-2 border-[#10a37f] bg-[#212121] transition-all duration-200 ease-in-out text-sm font-medium font-['Inter']" href="#">
+<span class="material-symbols-outlined text-[#10a37f]" data-icon="verified_user">verified_user</span>
+<span>Compliance</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center space-x-3 px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out text-sm font-medium font-['Inter']" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Benchmarks</span>
+</a>
+<!-- Inactive -->
+<a class="flex items-center space-x-3 px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out text-sm font-medium font-['Inter'] mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Workspace Area -->
+<div class="flex-1 flex flex-col min-h-screen md:ml-[240px] w-full relative">
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-[#0d0d0d] flex justify-between items-center px-6 w-full sticky top-0 z-30 h-16 border-b border-[#2f2f2f] font-['Inter'] antialiased tracking-tight">
+<div class="text-lg font-bold text-white tracking-wide">
+                FairLens
+            </div>
+<div class="flex items-center space-x-5">
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined text-[#b4b4b4] hover:text-white transition-colors duration-200 cursor-pointer active:scale-95" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-[#b4b4b4] hover:text-white transition-colors duration-200 cursor-pointer active:scale-95" data-icon="help_outline">help_outline</span>
+</div>
+<div class="flex items-center space-x-3 border-l border-[#2f2f2f] pl-5">
+<span class="text-sm text-[#b4b4b4]">Google SSO</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-[#2f2f2f] flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-[#b4b4b4] text-lg" data-icon="person">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas / Main Content -->
+<main class="flex-1 p-lg overflow-y-auto">
+<div class="max-w-container-max mx-auto w-full">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-lg gap-4">
+<div>
+<h1 class="font-h1 text-h1 text-white">Compliance Ledger</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs max-w-2xl">
+                            Immutable, cryptographically signed artifacts detailing model performance against selected regulatory frameworks.
+                        </p>
+</div>
+<button class="bg-[#10a37f] text-white font-label-sm px-4 py-2.5 rounded-lg flex items-center space-x-2 hover:bg-[#12a480] transition-colors border border-transparent shadow-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+<span>Generate Report</span>
+</button>
+</div>
+<!-- Data Table Surface -->
+<div class="bg-surface border border-[#2f2f2f] rounded-xl overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-[#2f2f2f]">
+<th class="py-3 px-5 font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase">Report ID</th>
+<th class="py-3 px-5 font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase">Target Model</th>
+<th class="py-3 px-5 font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase">Framework</th>
+<th class="py-3 px-5 font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase">Generated At</th>
+<th class="py-3 px-5 font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase text-center">KMS Signed</th>
+<th class="py-3 px-5 font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase text-right">SHA-256 Hash</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#2f2f2f] font-body-md text-body-md">
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-4 px-5 text-white font-medium">FL-REP-8821</td>
+<td class="py-4 px-5 text-on-surface">CreditScoring_v4.2</td>
+<td class="py-4 px-5">
+<span class="inline-flex items-center px-2 py-1 rounded bg-[#212121] text-[#ececec] font-label-sm text-[11px] border border-[#2f2f2f]">
+                                            EU AI Act
+                                        </span>
+</td>
+<td class="py-4 px-5 text-on-surface-variant">2023-10-24 14:32 UTC</td>
+<td class="py-4 px-5 text-center">
+<span class="material-symbols-outlined text-[#10a37f] text-[18px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="py-4 px-5 text-right font-code text-code text-on-surface-variant opacity-70">
+                                        a9f4c8b2...e7d1
+                                    </td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-4 px-5 text-white font-medium">FL-REP-8820</td>
+<td class="py-4 px-5 text-on-surface">ResumeScreen_Llama3</td>
+<td class="py-4 px-5">
+<span class="inline-flex items-center px-2 py-1 rounded bg-[#212121] text-[#ececec] font-label-sm text-[11px] border border-[#2f2f2f]">
+                                            EEOC (Title VII)
+                                        </span>
+</td>
+<td class="py-4 px-5 text-on-surface-variant">2023-10-23 09:15 UTC</td>
+<td class="py-4 px-5 text-center">
+<span class="material-symbols-outlined text-[#10a37f] text-[18px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="py-4 px-5 text-right font-code text-code text-on-surface-variant opacity-70">
+                                        8b3f1a9c...4f2b
+                                    </td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-4 px-5 text-white font-medium">FL-REP-8819</td>
+<td class="py-4 px-5 text-on-surface">TradingAlgo_XGBoost</td>
+<td class="py-4 px-5">
+<span class="inline-flex items-center px-2 py-1 rounded bg-[#212121] text-[#ececec] font-label-sm text-[11px] border border-[#2f2f2f]">
+                                            RBI-SEBI
+                                        </span>
+</td>
+<td class="py-4 px-5 text-on-surface-variant">2023-10-21 16:45 UTC</td>
+<td class="py-4 px-5 text-center">
+<span class="material-symbols-outlined text-[#10a37f] text-[18px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="py-4 px-5 text-right font-code text-code text-on-surface-variant opacity-70">
+                                        c4d5e6f7...1a2b
+                                    </td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors duration-150">
+<td class="py-4 px-5 text-white font-medium">FL-REP-8818</td>
+<td class="py-4 px-5 text-on-surface">CreditScoring_v4.1</td>
+<td class="py-4 px-5">
+<span class="inline-flex items-center px-2 py-1 rounded bg-[#212121] text-[#ececec] font-label-sm text-[11px] border border-[#2f2f2f]">
+                                            EU AI Act
+                                        </span>
+</td>
+<td class="py-4 px-5 text-on-surface-variant">2023-09-15 11:20 UTC</td>
+<td class="py-4 px-5 text-center">
+<span class="material-symbols-outlined text-[#10a37f] text-[18px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="py-4 px-5 text-right font-code text-code text-on-surface-variant opacity-70">
+                                        7f8e9d0c...3b4a
+                                    </td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="bg-surface-container-lowest border-t border-[#2f2f2f] px-5 py-3 flex justify-between items-center text-sm">
+<span class="text-on-surface-variant font-label-sm">Showing 1 to 4 of 42 entries</span>
+<div class="flex space-x-2">
+<button class="px-3 py-1 border border-[#2f2f2f] rounded bg-transparent text-[#b4b4b4] hover:text-white transition-colors disabled:opacity-50" disabled="">Prev</button>
+<button class="px-3 py-1 border border-[#2f2f2f] rounded bg-[#212121] text-white hover:bg-[#2f2f2f] transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay: Generate Report -->
+<div class="fixed inset-0 bg-[#0d0d0d]/80 backdrop-blur-[2px] z-[100] flex items-center justify-center p-4">
+<!-- Modal Surface -->
+<div class="bg-[#171717] border border-[#2f2f2f] rounded-xl w-full max-w-lg shadow-[0_0_40px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden">
+<!-- Header -->
+<div class="px-6 py-5 border-b border-[#2f2f2f] flex justify-between items-center bg-[#171717]">
+<h2 class="font-h3 text-h3 text-white">Generate Artifact</h2>
+<button class="text-[#b4b4b4] hover:text-white transition-colors focus:outline-none">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Body -->
+<div class="p-6 flex flex-col space-y-6">
+<!-- Field: Target Model -->
+<div class="flex flex-col space-y-2">
+<label class="font-label-sm text-label-sm text-[#ececec]">Target Model Registry</label>
+<div class="relative">
+<select class="w-full bg-[#0d0d0d] border border-[#2f2f2f] rounded-lg px-4 py-3 text-white font-body-md appearance-none focus:outline-none focus:border-[#10a37f] focus:ring-1 focus:ring-[#10a37f] transition-all">
+<option value="credit_v4.2">CreditScoring_v4.2 (Production)</option>
+<option value="resume_llama">ResumeScreen_Llama3 (Staging)</option>
+<option value="trading_xg">TradingAlgo_XGBoost (Production)</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-[#b4b4b4]">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<p class="text-[12px] text-on-surface-variant mt-1">Select the active model deployment to audit.</p>
+</div>
+<!-- Field: Regulatory Framework -->
+<div class="flex flex-col space-y-2">
+<label class="font-label-sm text-label-sm text-[#ececec]">Governance Framework</label>
+<div class="grid grid-cols-1 gap-3">
+<label class="flex items-start space-x-3 p-3 border border-[#10a37f] bg-[#212121] rounded-lg cursor-pointer">
+<input checked="" class="mt-0.5 appearance-none w-4 h-4 rounded-full border border-[#10a37f] bg-[#10a37f] ring-2 ring-offset-2 ring-offset-[#212121] ring-[#10a37f]" name="framework" type="radio"/>
+<div class="flex flex-col">
+<span class="text-white font-medium text-sm">EU AI Act (Annex IV)</span>
+<span class="text-on-surface-variant text-xs mt-0.5">Comprehensive assessment for high-risk systems.</span>
+</div>
+</label>
+<label class="flex items-start space-x-3 p-3 border border-[#2f2f2f] bg-[#0d0d0d] rounded-lg cursor-pointer hover:border-[#10a37f] transition-colors">
+<input class="mt-0.5 appearance-none w-4 h-4 rounded-full border border-[#2f2f2f] bg-transparent" name="framework" type="radio"/>
+<div class="flex flex-col">
+<span class="text-white font-medium text-sm">EEOC (Title VII)</span>
+<span class="text-on-surface-variant text-xs mt-0.5">Disparate impact analysis for employment tools.</span>
+</div>
+</label>
+<label class="flex items-start space-x-3 p-3 border border-[#2f2f2f] bg-[#0d0d0d] rounded-lg cursor-pointer hover:border-[#10a37f] transition-colors">
+<input class="mt-0.5 appearance-none w-4 h-4 rounded-full border border-[#2f2f2f] bg-transparent" name="framework" type="radio"/>
+<div class="flex flex-col">
+<span class="text-white font-medium text-sm">RBI-SEBI Guidelines</span>
+<span class="text-on-surface-variant text-xs mt-0.5">Algorithmic trading and risk compliance metrics.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="px-6 py-4 border-t border-[#2f2f2f] bg-[#131313] flex justify-end items-center space-x-3">
+<button class="px-4 py-2 text-[#b4b4b4] font-label-sm border border-transparent hover:text-white transition-colors">
+                    Cancel
+                </button>
+<button class="px-5 py-2 bg-[#10a37f] text-white font-label-sm rounded-lg hover:bg-[#12a480] transition-colors flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_arrow">play_arrow</span>
+<span>Execute Run</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

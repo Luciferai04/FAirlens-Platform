@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens Console - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#e89337",
+                      "on-surface-variant": "#bcc9cd",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed": "#2d1600",
+                      "surface-container": "#1b2122",
+                      "surface": "#0e1416",
+                      "surface-variant": "#303638",
+                      "primary-container": "#06b6d4",
+                      "surface-tint": "#4cd7f6",
+                      "on-primary-container": "#00424f",
+                      "primary": "#4cd7f6",
+                      "on-secondary-fixed-variant": "#5516be",
+                      "on-background": "#dee3e6",
+                      "background": "#0e1416",
+                      "secondary-fixed-dim": "#d0bcff",
+                      "on-surface": "#dee3e6",
+                      "surface-bright": "#343a3c",
+                      "on-primary": "#003640",
+                      "surface-container-lowest": "#090f11",
+                      "tertiary-fixed": "#ffdcbf",
+                      "outline-variant": "#3d494c",
+                      "inverse-surface": "#dee3e6",
+                      "on-secondary": "#3c0091",
+                      "surface-dim": "#0e1416",
+                      "on-secondary-fixed": "#23005c",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "outline": "#869397",
+                      "secondary-fixed": "#e9ddff",
+                      "secondary": "#d0bcff",
+                      "on-tertiary-fixed-variant": "#6a3b00",
+                      "surface-container-low": "#171d1e",
+                      "on-tertiary": "#4b2800",
+                      "primary-fixed": "#acedff",
+                      "on-tertiary-container": "#5b3200",
+                      "surface-container-highest": "#303638",
+                      "primary-fixed-dim": "#4cd7f6",
+                      "on-primary-fixed-variant": "#004e5c",
+                      "on-primary-fixed": "#001f26",
+                      "tertiary": "#ffb873",
+                      "surface-container-high": "#252b2d",
+                      "error": "#ffb4ab",
+                      "inverse-on-surface": "#2b3133",
+                      "on-secondary-container": "#c4abff",
+                      "secondary-container": "#571bc1",
+                      "inverse-primary": "#00687a",
+                      "tertiary-fixed-dim": "#ffb873"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base_unit": "4px",
+                      "card_padding": "20px",
+                      "topbar_height": "64px",
+                      "container_padding": "24px",
+                      "gutter": "16px",
+                      "sidebar_width": "240px"
+              },
+              "fontFamily": {
+                      "h3": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "h1": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "mono": ["Inter"],
+                      "h2": ["Inter"]
+              },
+              "fontSize": {
+                      "h3": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "mono": ["13px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "h2": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-on-surface font-body-md antialiased overflow-hidden flex h-screen">
+<!-- SideNavBar (Shared Component) -->
+<nav class="w-[240px] h-screen border-r fixed left-0 top-0 border-slate-800/50 shadow-none bg-slate-900 text-cyan-500 font-sans text-xs uppercase tracking-widest font-bold z-40 hidden md:flex flex-col">
+<div class="px-6 py-6 border-b border-slate-800/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-cyan-500 text-3xl" data-weight="fill">shield</span>
+<div>
+<div class="text-cyan-500 font-black tracking-tight text-lg normal-case">FairLens Console</div>
+<div class="text-slate-400 text-[10px] uppercase tracking-wider">Enterprise Governance</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col h-full py-4 px-3 gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-500 rounded-sm" href="#">
+<span class="material-symbols-outlined" data-weight="fill">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Model Registry</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span>Incidents</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<span>Compliance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Benchmarks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<div class="mt-auto pt-4 border-t border-slate-800/50">
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>Documentation</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded-sm" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 flex flex-col md:ml-[240px] h-screen overflow-hidden bg-[#0f172a]">
+<!-- TopNavBar (Shared Component) -->
+<header class="h-16 w-full border-b sticky top-0 z-50 border-slate-800 shadow-none bg-slate-900 text-cyan-500 font-sans antialiased text-sm font-medium tracking-tight">
+<div class="flex justify-between items-center px-6 h-full">
+<!-- Mobile Logo (hidden on md) -->
+<div class="md:hidden text-xl font-black text-cyan-500 tracking-tighter">
+                    FairLens
+                </div>
+<!-- Breadcrumbs/Context -->
+<div class="hidden md:flex items-center text-slate-400 gap-2">
+<span class="text-cyan-400 font-semibold cursor-pointer active:opacity-80">Dashboard</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span>Overview</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded bg-slate-800/50 text-slate-300 border border-slate-700">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+<span class="font-body-sm">Global Corp HQ</span>
+</div>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-800/50 transition-colors duration-200 text-slate-400 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-800/50 transition-colors duration-200 text-slate-400 cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">verified_user</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-700 border border-slate-600 overflow-hidden cursor-pointer active:opacity-80">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="professional headshot of a man with short brown hair wearing a dark blue shirt against a neutral grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3xevj4PJ_Uxr53rTVgLIUYzeqcdOOYnjQbD2X5CF5gqivPF1b7QC913YqrzntOjqlQPYAC6HDDq2ctaRVzV6bUxBDW1ITqZ_Z157DdkG3mm5dCrTfzMfNYTPF8Io1B1ecQLybH7-05GqGyc81p0Rg_lEk-NNFUS5eMR_b0aJqYH_yk0nf7heWVa4aux5dLiKKxPNgxBX0k6M8076hgxLQ_erbFAqqVYQKkqSVzFR9exdzqJal-Kx7nsABb6K6I1dnOslFKg3T4VEC"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- KPIs -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Models Monitored -->
+<div class="bg-[#1e293b] border border-[#334155] rounded-lg p-5 flex flex-col relative overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-cyan-500/10 to-transparent"></div>
+<div class="flex items-center justify-between mb-2 relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Models Monitored</span>
+<span class="material-symbols-outlined text-outline">inventory_2</span>
+</div>
+<div class="font-h1 text-[32px] font-bold text-on-surface tracking-tight mt-1 relative z-10">47</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-2 flex items-center gap-1 relative z-10">
+<span class="material-symbols-outlined text-primary text-[16px]">trending_up</span>
+<span>+3 this week</span>
+</div>
+</div>
+<!-- Active Incidents -->
+<div class="bg-[#1e293b] border border-[#334155] rounded-lg p-5 flex flex-col relative overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-error/10 to-transparent"></div>
+<div class="flex items-center justify-between mb-2 relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Active Incidents</span>
+<span class="material-symbols-outlined text-error">report_problem</span>
+</div>
+<div class="flex items-center gap-3 mt-1 relative z-10">
+<div class="font-h1 text-[32px] font-bold text-error tracking-tight">3</div>
+<span class="bg-error/20 text-error font-label-caps text-[10px] px-2 py-1 rounded-full border border-error/30">ATTENTION REQ</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-2 relative z-10">
+                        2 critical, 1 warning
+                    </div>
+</div>
+<!-- Avg Equity Score -->
+<div class="bg-[#1e293b] border border-[#334155] rounded-lg p-5 flex flex-col relative overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-[#10b981]/10 to-transparent"></div>
+<div class="flex items-center justify-between mb-2 relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Avg Equity Score</span>
+<span class="material-symbols-outlined text-outline">balance</span>
+</div>
+<div class="font-h1 text-[32px] font-bold text-on-surface tracking-tight mt-1 relative z-10">0.87</div>
+<div class="font-body-sm text-body-sm text-[#10b981] mt-2 flex items-center gap-1 relative z-10">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+<span>+0.02 vs last month</span>
+</div>
+</div>
+<!-- Compliance Coverage -->
+<div class="bg-[#1e293b] border border-[#334155] rounded-lg p-5 flex flex-col relative overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-secondary/10 to-transparent"></div>
+<div class="flex items-center justify-between mb-2 relative z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Compliance Coverage</span>
+<span class="material-symbols-outlined text-outline">gavel</span>
+</div>
+<div class="font-h1 text-[32px] font-bold text-on-surface tracking-tight mt-1 relative z-10">94%</div>
+<div class="w-full bg-[#0f172a] h-1.5 rounded-full mt-3 overflow-hidden relative z-10">
+<div class="bg-secondary h-full rounded-full w-[94%]"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Chart Area -->
+<div class="lg:col-span-2 bg-[#1e293b] border border-[#334155] rounded-lg flex flex-col">
+<div class="p-5 border-b border-[#334155] flex justify-between items-center">
+<div>
+<h2 class="font-h3 text-h3 text-on-surface">Model Equity Distribution</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Disparate impact ratio across active models</p>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="p-5 flex-1 flex flex-col relative">
+<!-- Y-axis labels and bars -->
+<div class="flex flex-col justify-between h-full space-y-4">
+<!-- Threshold Line -->
+<div class="absolute left-[120px] right-5 top-5 bottom-8 border-l-2 border-dashed border-error/50 z-0">
+<div class="absolute -top-5 -left-4 text-error font-mono text-[10px] bg-[#1e293b] px-1">0.85</div>
+</div>
+<!-- Bar 1 (Red) -->
+<div class="flex items-center relative z-10">
+<div class="w-[100px] text-right pr-4 font-mono text-mono text-on-surface-variant truncate">HR_Screen_v2</div>
+<div class="flex-1 h-6 bg-[#0f172a] rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 bg-error/80 rounded-sm" style="width: 72%;"></div>
+<div class="absolute left-[74%] top-1/2 -translate-y-1/2 font-mono text-[11px] text-on-surface">0.72</div>
+</div>
+</div>
+<!-- Bar 2 (Amber) -->
+<div class="flex items-center relative z-10">
+<div class="w-[100px] text-right pr-4 font-mono text-mono text-on-surface-variant truncate">Loan_App_Pro</div>
+<div class="flex-1 h-6 bg-[#0f172a] rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 bg-tertiary-container/80 rounded-sm" style="width: 82%;"></div>
+<div class="absolute left-[84%] top-1/2 -translate-y-1/2 font-mono text-[11px] text-on-surface">0.82</div>
+</div>
+</div>
+<!-- Bar 3 (Green) -->
+<div class="flex items-center relative z-10">
+<div class="w-[100px] text-right pr-4 font-mono text-mono text-on-surface-variant truncate">Fraud_Detect</div>
+<div class="flex-1 h-6 bg-[#0f172a] rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 bg-[#10b981]/80 rounded-sm" style="width: 89%;"></div>
+<div class="absolute left-[91%] top-1/2 -translate-y-1/2 font-mono text-[11px] text-on-surface">0.89</div>
+</div>
+</div>
+<!-- Bar 4 (Green) -->
+<div class="flex items-center relative z-10">
+<div class="w-[100px] text-right pr-4 font-mono text-mono text-on-surface-variant truncate">Rec_Engine_B</div>
+<div class="flex-1 h-6 bg-[#0f172a] rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 bg-[#10b981]/80 rounded-sm" style="width: 93%;"></div>
+<div class="absolute left-[95%] top-1/2 -translate-y-1/2 font-mono text-[11px] text-on-surface">0.93</div>
+</div>
+</div>
+<!-- Bar 5 (Green) -->
+<div class="flex items-center relative z-10">
+<div class="w-[100px] text-right pr-4 font-mono text-mono text-on-surface-variant truncate">Pricing_Opt</div>
+<div class="flex-1 h-6 bg-[#0f172a] rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 bg-[#10b981]/80 rounded-sm" style="width: 98%;"></div>
+<div class="absolute left-[100%] top-1/2 -translate-y-1/2 font-mono text-[11px] text-on-surface pl-1">0.98</div>
+</div>
+</div>
+</div>
+<!-- X-axis -->
+<div class="flex ml-[100px] border-t border-[#334155] mt-4 pt-2 relative">
+<div class="flex-1 flex justify-between font-mono text-[10px] text-on-surface-variant">
+<span>0.0</span>
+<span>0.2</span>
+<span>0.4</span>
+<span>0.6</span>
+<span>0.8</span>
+<span>1.0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Panel (Recent Scans/Audits) -->
+<div class="bg-[#1e293b] border border-[#334155] rounded-lg flex flex-col">
+<div class="p-4 border-b border-[#334155]">
+<h2 class="font-h3 text-h3 text-on-surface">Audit Log</h2>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+<div class="p-3 hover:bg-[#334155]/30 rounded-md transition-colors cursor-pointer border-l-2 border-transparent hover:border-primary">
+<div class="flex justify-between items-start mb-1">
+<span class="font-mono text-mono text-on-surface">Auto-Scan Complete</span>
+<span class="text-[10px] text-on-surface-variant">10m ago</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">System checked 47 models</div>
+</div>
+<div class="p-3 hover:bg-[#334155]/30 rounded-md transition-colors cursor-pointer border-l-2 border-transparent hover:border-error">
+<div class="flex justify-between items-start mb-1">
+<span class="font-mono text-mono text-error">Threshold Breach</span>
+<span class="text-[10px] text-on-surface-variant">1h ago</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">HR_Screen_v2 fell below 0.80</div>
+</div>
+<div class="p-3 hover:bg-[#334155]/30 rounded-md transition-colors cursor-pointer border-l-2 border-transparent hover:border-primary">
+<div class="flex justify-between items-start mb-1">
+<span class="font-mono text-mono text-on-surface">Model Updated</span>
+<span class="text-[10px] text-on-surface-variant">3h ago</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Fraud_Detect weights adjusted by J.Doe</div>
+</div>
+<div class="p-3 hover:bg-[#334155]/30 rounded-md transition-colors cursor-pointer border-l-2 border-transparent hover:border-primary">
+<div class="flex justify-between items-start mb-1">
+<span class="font-mono text-mono text-on-surface">Report Generated</span>
+<span class="text-[10px] text-on-surface-variant">1d ago</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant truncate">Monthly compliance summary exported</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Section -->
+<div class="bg-[#1e293b] border border-[#334155] rounded-lg overflow-hidden">
+<div class="p-5 border-b border-[#334155] flex justify-between items-center bg-[#1e293b]">
+<h2 class="font-h3 text-h3 text-on-surface">Recent Incidents</h2>
+<button class="bg-transparent text-primary border border-primary hover:bg-primary/10 px-3 py-1.5 rounded text-sm font-medium transition-colors">
+                        View All
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#0f172a]/50 border-b border-[#334155]">
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Model Name</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Metric Violated</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Severity</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant uppercase">Time Ago</th>
+<th class="p-4 font-label-caps text-label-caps text-on-surface-variant uppercase text-right">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<tr class="border-b border-[#334155] hover:bg-[#334155]/20 transition-colors">
+<td class="p-4">
+<div class="font-mono text-on-surface">HR_Screen_v2</div>
+<div class="text-[11px] text-on-surface-variant mt-0.5">Classification / Tabular</div>
+</td>
+<td class="p-4 text-on-surface">Disparate Impact (Gender)</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-error/10 text-error border border-error/20 font-mono text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                        CRITICAL
+                                    </span>
+</td>
+<td class="p-4 text-on-surface-variant">1 hour ago</td>
+<td class="p-4 text-right">
+<span class="inline-block px-2 py-1 rounded bg-surface-bright text-on-surface border border-outline-variant text-xs">Under Review</span>
+</td>
+</tr>
+<tr class="border-b border-[#334155] hover:bg-[#334155]/20 transition-colors">
+<td class="p-4">
+<div class="font-mono text-on-surface">Loan_App_Pro</div>
+<div class="text-[11px] text-on-surface-variant mt-0.5">Regression / Tabular</div>
+</td>
+<td class="p-4 text-on-surface">Demographic Parity (Age)</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-tertiary-container/10 text-tertiary-container border border-tertiary-container/20 font-mono text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+                                        HIGH
+                                    </span>
+</td>
+<td class="p-4 text-on-surface-variant">4 hours ago</td>
+<td class="p-4 text-right">
+<span class="inline-block px-2 py-1 rounded bg-surface-bright text-on-surface border border-outline-variant text-xs">Investigating</span>
+</td>
+</tr>
+<tr class="hover:bg-[#334155]/20 transition-colors">
+<td class="p-4">
+<div class="font-mono text-on-surface">ChatBot_CustomerService</div>
+<div class="text-[11px] text-on-surface-variant mt-0.5">NLP / LLM</div>
+</td>
+<td class="p-4 text-on-surface">Toxicity Score Spike</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-tertiary-container/10 text-tertiary-container border border-tertiary-container/20 font-mono text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+                                        HIGH
+                                    </span>
+</td>
+<td class="p-4 text-on-surface-variant">1 day ago</td>
+<td class="p-4 text-right">
+<span class="inline-block px-2 py-1 rounded bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20 text-xs">Resolved</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>

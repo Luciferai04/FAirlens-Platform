@@ -1,0 +1,87 @@
+site_name: FairLens Documentation
+site_description: Enterprise AI Bias Detection Platform
+site_url: https://fairlens.dev
+repo_url: https://github.com/your-org/fairlens
+repo_name: fairlens
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: cyan
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: cyan
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.expand
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/install.md
+    - Quick Audit: getting-started/quickstart.md
+    - GCP Setup: getting-started/gcp-setup.md
+  - SDK Reference:
+    - audit(): sdk/audit.md
+    - AuditReport: sdk/report.md
+    - Fairness Metrics: sdk/metrics.md
+    - Connectors: sdk/connectors.md
+  - MLOps Integration:
+    - CI/CD Gate: mlops/gate.md
+    - Real-Time Monitor: mlops/monitor.md
+    - Policy YAML: mlops/policy.md
+  - Enterprise Console:
+    - Console Overview: console/overview.md
+    - RBAC Configuration: console/rbac.md
+    - Incident Management: console/incidents.md
+  - Compliance:
+    - EU AI Act: compliance/eu-ai-act.md
+    - EEOC: compliance/eeoc.md
+  - Tutorials:
+    - Loan Approval Audit: tutorials/loan-approval.md
+    - Hiring Model Audit: tutorials/hiring.md
+    - Healthcare Triage: tutorials/healthcare.md
+  - API Reference:
+    - Benchmark API: api/benchmarks.md
+    - Remediation API: api/remediation.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [../sdk]
+          options:
+            show_source: true
+            show_root_heading: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables

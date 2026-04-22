@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens - Model Detail</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#e89337",
+                    "on-surface-variant": "#bcc9cd",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed": "#2d1600",
+                    "surface-container": "#1b2122",
+                    "surface": "#0e1416",
+                    "surface-variant": "#303638",
+                    "primary-container": "#06b6d4",
+                    "surface-tint": "#4cd7f6",
+                    "on-primary-container": "#00424f",
+                    "primary": "#4cd7f6",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-background": "#dee3e6",
+                    "background": "#0e1416",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "on-surface": "#dee3e6",
+                    "surface-bright": "#343a3c",
+                    "on-primary": "#003640",
+                    "surface-container-lowest": "#090f11",
+                    "tertiary-fixed": "#ffdcbf",
+                    "outline-variant": "#3d494c",
+                    "inverse-surface": "#dee3e6",
+                    "on-secondary": "#3c0091",
+                    "surface-dim": "#0e1416",
+                    "on-secondary-fixed": "#23005c",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "outline": "#869397",
+                    "secondary-fixed": "#e9ddff",
+                    "secondary": "#d0bcff",
+                    "on-tertiary-fixed-variant": "#6a3b00",
+                    "surface-container-low": "#171d1e",
+                    "on-tertiary": "#4b2800",
+                    "primary-fixed": "#acedff",
+                    "on-tertiary-container": "#5b3200",
+                    "surface-container-highest": "#303638",
+                    "primary-fixed-dim": "#4cd7f6",
+                    "on-primary-fixed-variant": "#004e5c",
+                    "on-primary-fixed": "#001f26",
+                    "tertiary": "#ffb873",
+                    "surface-container-high": "#252b2d",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#2b3133",
+                    "on-secondary-container": "#c4abff",
+                    "secondary-container": "#571bc1",
+                    "inverse-primary": "#00687a",
+                    "tertiary-fixed-dim": "#ffb873"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base_unit": "4px",
+                    "card_padding": "20px",
+                    "topbar_height": "64px",
+                    "container_padding": "24px",
+                    "gutter": "16px",
+                    "sidebar_width": "240px"
+            },
+            "fontFamily": {
+                    "h3": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "h1": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "mono": ["Inter"],
+                    "h2": ["Inter"]
+            },
+            "fontSize": {
+                    "h3": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "mono": ["13px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h2": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        /* Utility for Material Symbols */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Hide scrollbar for cleaner look in high-density UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3d494c;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #869397;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden flex h-screen">
+<!-- JSON Injected SideNavBar -->
+<nav class="bg-slate-900 w-[240px] h-screen border-r border-slate-800/50 shadow-none fixed left-0 top-0 flex flex-col h-full py-4 z-40">
+<div class="px-6 mb-8 flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-cyan-500 text-2xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="text-cyan-500 font-black tracking-tighter text-lg">FairLens Console</span>
+</div>
+<span class="text-slate-500 text-[10px] uppercase tracking-widest font-bold">Enterprise Governance</span>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<!-- Inactive -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </div>
+<!-- Active -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-500 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">inventory_2</span>
+                Model Registry
+            </div>
+<!-- Inactive -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">report_problem</span>
+                Incidents
+            </div>
+<!-- Inactive -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">gavel</span>
+                Compliance
+            </div>
+<!-- Inactive -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">analytics</span>
+                Benchmarks
+            </div>
+<!-- Inactive -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </div>
+</div>
+<div class="mt-auto flex flex-col gap-1 border-t border-slate-800/50 pt-4">
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">menu_book</span>
+                Documentation
+            </div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold">
+<span class="material-symbols-outlined">contact_support</span>
+                Support
+            </div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-[240px] flex flex-col h-screen overflow-hidden">
+<!-- JSON Injected TopNavBar -->
+<header class="bg-slate-900 h-16 w-full border-b sticky top-0 z-50 border-slate-800 shadow-none flex justify-between items-center px-6 text-cyan-500 font-sans antialiased text-sm font-medium tracking-tight">
+<div class="flex items-center gap-4">
+<!-- Breadcrumbs conceptual space -->
+<div class="flex items-center gap-2 text-slate-400">
+<span class="cursor-pointer hover:text-cyan-400 transition-colors duration-200">Models</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-cyan-400 font-semibold cursor-pointer active:opacity-80">Credit Decision Engine v3.1</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2 text-slate-300">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+<span>Global Corp HQ</span>
+</div>
+<div class="flex items-center gap-4 border-l border-slate-800 pl-6">
+<span class="material-symbols-outlined cursor-pointer hover:bg-slate-800/50 transition-colors duration-200 rounded p-1 active:opacity-80">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-slate-800/50 transition-colors duration-200 rounded p-1 active:opacity-80">verified_user</span>
+<div class="h-8 w-8 rounded-full bg-slate-700 border border-slate-600 flex items-center justify-center overflow-hidden ml-2">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQePt8N8k7f4uHpNZo12u2UbH0U5f2T-aQL94wjP8j7gLSpRG57QaBeO3dRCYX1DEOm80Zy28T0x5bJOHwAavJzm_VdrpsyV5l1vclw5cxzFiSe5XToaimHNjexMNQsaGdF0MvFoWvru5-zs0MnEDQMJDQul3tREPm0h3Qag4in5MRyPrPQQq1Ry0t2URnZjadbKM9_MMavuqUdm-Dj3tIYjS5-SO3J-u4_oMDeNoJ3s3Hz2j4BQSOk_GpkQa9R7nPdvyql-15Fcuo"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Fluid Canvas Area -->
+<main class="flex-1 overflow-y-auto p-container_padding bg-surface-dim">
+<div class="grid grid-cols-12 gap-gutter max-w-[1600px] mx-auto">
+<!-- TOP: Model Metadata Card -->
+<section class="col-span-12 bg-surface-container border border-outline-variant rounded-xl p-card_padding flex flex-col gap-6 relative overflow-hidden">
+<!-- Subtle background glow -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+<div class="flex flex-col md:flex-row justify-between items-start gap-4 z-10">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<h1 class="font-h1 text-h1 text-on-surface">Credit Decision Engine v3.1</h1>
+<span class="bg-primary/10 border border-primary/20 text-primary px-2.5 py-1 rounded-full font-label-caps text-label-caps flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                                    Active Deployment
+                                </span>
+<span class="bg-surface-variant border border-outline-variant text-on-surface-variant px-2.5 py-1 rounded-full font-label-caps text-label-caps">
+                                    Risk Tier 1
+                                </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                                Core underwriting model for consumer auto and personal loans. Evaluates default probability utilizing historical credit bureau data, income verification, and demographic metadata.
+                            </p>
+</div>
+<div class="flex flex-col items-end border border-outline-variant bg-surface rounded-lg px-4 py-3 min-w-[180px]">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Composite Equity Score</span>
+<div class="flex items-baseline gap-1">
+<span class="font-h1 text-[32px] font-bold text-primary leading-none tracking-tight">88.4</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ 100</span>
+</div>
+<div class="w-full bg-surface-variant h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 88.4%;"></div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-outline-variant/50 pt-5 z-10">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Model Owner</span>
+<span class="font-body-md text-body-md text-on-surface flex items-center gap-2">
+<img alt="Avatar" class="w-5 h-5 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyWEE8810X7cylTzPYcbZgv_5jSawjyNksK_Pqiy2hRj7CveHzXrl6uRf6nmpCqnVTWeKZnWKlnugz20eCfOzZDinhNyGX5rqCEwCAmo1NLgMvoXJkcLY4cIkguJ6h94mv6Wy2iQzfKN2I__qRtj3MioclxnEq-Oo0yL0cfsSUniwqj1nqgQRZIvGgD_q53awpEuDG9zLgi3CBPG9qTL7U3GRKEwlhc38cEJLovQoy9W696YvdhkRs4Adv4nSQrceAQxtNLQrZi36v"/>
+                                Sarah Jenkins, VP Data Science
+                            </span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Last Audited</span>
+<span class="font-body-md text-body-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span>
+                                Oct 12, 2023 (2 days ago)
+                            </span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Protected Attributes</span>
+<span class="font-body-md text-body-md text-on-surface">Age, Gender, Marital Status</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Dataset Volume</span>
+<span class="font-mono text-mono text-on-surface">2.4M records (Trailing 12mo)</span>
+</div>
+</div>
+</section>
+<!-- BELOW LEFT: Radar Chart (Fairness Metrics) -->
+<section class="col-span-12 lg:col-span-4 bg-surface-container border border-outline-variant rounded-xl p-card_padding flex flex-col h-[420px]">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-h2 text-h2 text-on-surface">Fairness Metrics</h2>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-on-surface">info</span>
+</div>
+<div class="flex-1 relative flex items-center justify-center">
+<!-- Stylized pure CSS/SVG Radar Chart interpretation -->
+<svg class="w-full h-full max-w-[280px] overflow-visible" viewbox="0 0 200 200">
+<!-- Background Web -->
+<polygon fill="none" points="100,20 156.5,43.5 180,100 156.5,156.5 100,180 43.5,156.5 20,100 43.5,43.5" stroke="#303638" stroke-width="1"></polygon>
+<polygon fill="none" points="100,40 142.4,57.6 160,100 142.4,142.4 100,160 57.6,142.4 40,100 57.6,57.6" stroke="#303638" stroke-width="1"></polygon>
+<polygon fill="none" points="100,60 128.3,71.7 140,100 128.3,128.3 100,140 71.7,128.3 60,100 71.7,71.7" stroke="#303638" stroke-width="1"></polygon>
+<polygon fill="none" points="100,80 114.1,85.9 120,100 114.1,114.1 100,120 85.9,114.1 80,100 85.9,85.9" stroke="#303638" stroke-width="1"></polygon>
+<!-- Spokes -->
+<line stroke="#303638" stroke-width="1" x1="100" x2="100" y1="100" y2="20"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="156.5" y1="100" y2="43.5"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="180" y1="100" y2="100"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="156.5" y1="100" y2="156.5"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="100" y1="100" y2="180"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="43.5" y1="100" y2="156.5"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="20" y1="100" y2="100"></line>
+<line stroke="#303638" stroke-width="1" x1="100" x2="43.5" y1="100" y2="43.5"></line>
+<!-- Threshold Polygon (Dashed, Error Color mapping roughly to var if possible, using explicit hex for SVG) -->
+<!-- Values: 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8 (Uniform Threshold) -->
+<!-- R=80 * 0.8 = 64.  Center is 100. -> 100-64 = 36... -->
+<polygon fill="none" points="100,36 145.2,54.8 164,100 145.2,145.2 100,164 54.8,145.2 36,100 54.8,54.8" stroke="#ffb4ab" stroke-dasharray="4 4" stroke-width="1.5"></polygon>
+<!-- Current Values Polygon (Primary Color) -->
+<!-- Mock Data: DP:0.9, EO:0.7, DI:0.85, CE:0.95, TI:0.6, SP:0.88, AO:0.75, EqO:0.82 -->
+<!-- Points mapping: Top(100, 100-R*V) ... -->
+<polygon fill="rgba(6, 182, 212, 0.2)" points="100,28 139.6,60.4 168,100 148,153.7 100,148 47.2,147.2 40,100 53.6,53.6" stroke="#4cd7f6" stroke-width="2"></polygon>
+<!-- Data Points -->
+<circle cx="100" cy="28" fill="#4cd7f6" r="3"></circle>
+<circle cx="139.6" cy="60.4" fill="#ffb4ab" r="3" stroke="#0e1416" stroke-width="1"></circle> <!-- Below threshold -->
+<circle cx="168" cy="100" fill="#4cd7f6" r="3"></circle>
+<circle cx="148" cy="153.7" fill="#4cd7f6" r="3"></circle>
+<circle cx="100" cy="148" fill="#ffb4ab" r="3" stroke="#0e1416" stroke-width="1"></circle> <!-- Below threshold -->
+<circle cx="47.2" cy="147.2" fill="#4cd7f6" r="3"></circle>
+<circle cx="40" cy="100" fill="#ffb4ab" r="3" stroke="#0e1416" stroke-width="1"></circle> <!-- Below threshold -->
+<circle cx="53.6" cy="53.6" fill="#4cd7f6" r="3"></circle>
+</svg>
+<!-- Labels around SVG (absolute positioning relative to flex-1 container) -->
+<div class="absolute inset-0 pointer-events-none text-[10px] font-label-caps text-on-surface-variant leading-tight">
+<span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 text-center">Demographic<br/>Parity</span>
+<span class="absolute top-[15%] right-[-5%] translate-x-0 text-left">Equalized<br/>Odds <span class="text-error">↓</span></span>
+<span class="absolute top-1/2 right-0 translate-x-8 -translate-y-1/2 text-left">Disparate<br/>Impact</span>
+<span class="absolute bottom-[15%] right-[-5%] translate-x-0 text-left">Calibration<br/>Error</span>
+<span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 text-center">Theil<br/>Index <span class="text-error">↓</span></span>
+<span class="absolute bottom-[15%] left-[-5%] -translate-x-0 text-right">Statistical<br/>Parity</span>
+<span class="absolute top-1/2 left-0 -translate-x-6 -translate-y-1/2 text-right">Average<br/>Odds <span class="text-error">↓</span></span>
+<span class="absolute top-[15%] left-[-5%] -translate-x-0 text-right">Equal<br/>Opportunity</span>
+</div>
+</div>
+<div class="mt-8 flex justify-center gap-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-sm bg-primary/20 border border-primary"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Current Model</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-[2px] bg-error border-t border-dashed border-error"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Policy Threshold</span>
+</div>
+</div>
+</section>
+<!-- BELOW RIGHT: Time-series Chart -->
+<section class="col-span-12 lg:col-span-8 bg-surface-container border border-outline-variant rounded-xl p-card_padding flex flex-col h-[420px]">
+<div class="flex justify-between items-center mb-6">
+<div class="flex flex-col">
+<h2 class="font-h2 text-h2 text-on-surface">Equity Score Trajectory</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Trailing 90 Days</span>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 bg-surface-variant border border-outline-variant rounded font-label-caps text-label-caps text-on-surface hover:bg-surface-bright transition-colors">30D</button>
+<button class="px-3 py-1 bg-primary border border-primary rounded font-label-caps text-label-caps text-on-primary">90D</button>
+<button class="px-3 py-1 bg-surface-variant border border-outline-variant rounded font-label-caps text-label-caps text-on-surface hover:bg-surface-bright transition-colors">YTD</button>
+</div>
+</div>
+<div class="flex-1 relative mt-4 border-l border-b border-outline-variant/50">
+<!-- Y-Axis Labels -->
+<div class="absolute left-[-30px] top-0 bottom-0 flex flex-col justify-between text-[10px] font-mono text-on-surface-variant h-full pb-[20px]">
+<span>100</span>
+<span>90</span>
+<span>80</span>
+<span>70</span>
+</div>
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-[24px]">
+<div class="w-full h-[1px] bg-outline-variant/20"></div>
+<div class="w-full h-[1px] bg-outline-variant/20"></div>
+<div class="w-full h-[1px] bg-outline-variant/20"></div>
+<div class="w-full h-[1px] bg-outline-variant/20"></div>
+</div>
+<!-- Chart SVG -->
+<svg class="absolute inset-0 w-full h-[calc(100%-24px)] overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 100">
+<!-- Definitions -->
+<defs>
+<lineargradient id="lineGrad" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#4cd7f6" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#4cd7f6" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- The Data Path (simulating 90 days. Range 70-100 mapped to 100-0) -->
+<!-- Values approx: 85, 86, 84, 88, 89, 90, 89, 87, 85, 88, 92, 91, 88 -->
+<!-- SVG Y = 100 - ((Val-70)/30 * 100) -->
+<polygon fill="url(#lineGrad)" points="0,100 0,50 83,46.6 166,53.3 250,40 333,36.6 416,33.3 500,36.6 583,43.3 666,50 750,40 833,26.6 916,30 1000,40 1000,100"></polygon>
+<polyline fill="none" points="0,50 83,46.6 166,53.3 250,40 333,36.6 416,33.3 500,36.6 583,43.3 666,50 750,40 833,26.6 916,30 1000,40" stroke="#4cd7f6" stroke-linejoin="round" stroke-width="3"></polyline>
+<!-- Anomaly Marker (Dip at day 60 approx) -->
+<!-- 666, 50 corresponds to val 85 -->
+<circle class="cursor-pointer hover:stroke-[3px]" cx="666" cy="50" fill="#0e1416" r="6" stroke="#ffb4ab" stroke-width="2"></circle>
+<!-- Warning line dropping down from anomaly -->
+<line stroke="#ffb4ab" stroke-dasharray="4 2" stroke-width="1" x1="666" x2="666" y1="50" y2="100"></line>
+<!-- Current value marker -->
+<circle cx="1000" cy="40" fill="#4cd7f6" r="5"></circle>
+</svg>
+<!-- Anomaly Tooltip (Simulated hover state for design) -->
+<div class="absolute left-[66%] top-[10%] -translate-x-1/2 bg-surface border border-outline-variant shadow-lg rounded p-2 z-10 w-48">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="material-symbols-outlined text-[14px] text-error">warning</span>
+<span class="font-label-caps text-label-caps text-error">Data Drift Detected</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block leading-tight">Income distribution shift in regional subset lowered score by 4 points.</span>
+</div>
+<!-- X-Axis Labels -->
+<div class="absolute bottom-[-24px] left-0 right-0 flex justify-between text-[10px] font-mono text-on-surface-variant">
+<span>Aug 14</span>
+<span>Sep 01</span>
+<span>Sep 15</span>
+<span>Oct 01</span>
+<span>Today</span>
+</div>
+</div>
+</section>
+<!-- BOTTOM: SHAP Feature Attribution Heatmap -->
+<section class="col-span-12 bg-surface-container border border-outline-variant rounded-xl p-card_padding flex flex-col mt-4">
+<div class="flex justify-between items-center mb-6">
+<div class="flex flex-col">
+<h2 class="font-h2 text-h2 text-on-surface">SHAP Feature Attribution by Demographic</h2>
+<span class="font-body-md text-body-md text-on-surface-variant mt-1">Identifies which model inputs disproportionately influence decisions across protected groups.</span>
+</div>
+<div class="flex items-center gap-4 border border-outline-variant rounded-full px-4 py-1.5 bg-surface">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Impact:</span>
+<div class="flex items-center gap-1 text-[10px] font-mono">
+<span class="w-3 h-3 bg-error rounded-sm opacity-80"></span> Negative
+                            </div>
+<div class="flex items-center gap-1 text-[10px] font-mono">
+<span class="w-3 h-3 bg-surface-variant rounded-sm border border-outline-variant"></span> Neutral
+                            </div>
+<div class="flex items-center gap-1 text-[10px] font-mono">
+<span class="w-3 h-3 bg-primary rounded-sm opacity-80"></span> Positive
+                            </div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr>
+<th class="p-3 border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant w-[25%]">Feature Name</th>
+<th class="p-3 border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant text-center w-[15%]">Global Importance</th>
+<th class="p-3 border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant text-center w-[20%]">Age &gt; 65 (Protected)</th>
+<th class="p-3 border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant text-center w-[20%]">Age 25-65 (Reference)</th>
+<th class="p-3 border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant text-center w-[20%]">Age &lt; 25 (Protected)</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm text-on-surface">
+<!-- Row 1 -->
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/30 transition-colors">
+<td class="p-3 font-mono">Debt_to_Income_Ratio</td>
+<td class="p-3">
+<div class="w-full bg-surface h-1.5 rounded-full overflow-hidden flex"><div class="bg-on-surface-variant w-[85%] h-full"></div></div>
+</td>
+<td class="p-2">
+<div class="bg-error/20 border border-error/30 text-error font-mono text-center py-1.5 rounded">+0.42</div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">+0.05</div>
+</td>
+<td class="p-2">
+<div class="bg-primary/20 border border-primary/30 text-primary font-mono text-center py-1.5 rounded">-0.38</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/30 transition-colors">
+<td class="p-3 font-mono flex items-center gap-2">
+                                        Recent_Inquiries_6m
+                                        <span class="material-symbols-outlined text-[14px] text-error cursor-help" title="High disparity detected">warning</span>
+</td>
+<td class="p-3">
+<div class="w-full bg-surface h-1.5 rounded-full overflow-hidden flex"><div class="bg-on-surface-variant w-[62%] h-full"></div></div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">-0.02</div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">+0.11</div>
+</td>
+<td class="p-2">
+<div class="bg-error/40 border border-error/50 text-error font-mono text-center py-1.5 rounded">+0.85</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/30 transition-colors">
+<td class="p-3 font-mono">Employment_Tenure_Yrs</td>
+<td class="p-3">
+<div class="w-full bg-surface h-1.5 rounded-full overflow-hidden flex"><div class="bg-on-surface-variant w-[55%] h-full"></div></div>
+</td>
+<td class="p-2">
+<div class="bg-primary/30 border border-primary/40 text-primary font-mono text-center py-1.5 rounded">-0.65</div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">-0.10</div>
+</td>
+<td class="p-2">
+<div class="bg-error/30 border border-error/40 text-error font-mono text-center py-1.5 rounded">+0.55</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-variant/30 transition-colors">
+<td class="p-3 font-mono">Available_Credit_Pct</td>
+<td class="p-3">
+<div class="w-full bg-surface h-1.5 rounded-full overflow-hidden flex"><div class="bg-on-surface-variant w-[40%] h-full"></div></div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">-0.08</div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">-0.05</div>
+</td>
+<td class="p-2">
+<div class="bg-surface border border-outline-variant/50 text-on-surface-variant font-mono text-center py-1.5 rounded">+0.12</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

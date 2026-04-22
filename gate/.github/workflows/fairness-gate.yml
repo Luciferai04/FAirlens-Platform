@@ -1,0 +1,72 @@
+name: Fairness Gate
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  fairness-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build FairLens Gate Docker image
+        run: |
+          docker build -t fairlens-gate -f gate/Dockerfile .
+
+      - name: Pull model artifact and eval CSV from GCS
+        run: |
+          gsutil cp ${{ vars.MODEL_GCS_PATH }} /tmp/model.pkl
+          gsutil cp ${{ vars.EVAL_CSV_GCS_PATH }} /tmp/eval.csv
+
+      - name: Run FairLens Fairness Gate
+        id: gate
+        continue-on-error: true
+        run: |
+          docker run --rm \
+            -v /tmp:/data \
+            fairlens-gate \
+              --model-path /data/model.pkl \
+              --eval-csv /data/eval.csv \
+              --sensitive-cols "${{ vars.SENSITIVE_COLS }}" \
+              --policy /gate/policy/default_policy.yaml \
+              --output-json /data/audit_report.json
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+
+      - name: Post audit results as PR comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            let report = 'No audit report generated';
+            try {
+              report = fs.readFileSync('/tmp/audit_report.json', 'utf8');
+            } catch (e) {}
+            const passed = '${{ steps.gate.outcome }}' === 'success';
+            const emoji = passed ? '✅' : '❌';
+            const body = `## ${emoji} FairLens Fairness Gate\n\n\`\`\`json\n${report}\n\`\`\``;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+      - name: Fail if gate detected violations
+        if: steps.gate.outcome == 'failure'
+        run: exit 1

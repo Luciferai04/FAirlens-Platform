@@ -1,0 +1,202 @@
+report_title: "EU AI Act — Annex IV Technical Documentation"
+framework: eu_ai_act
+regulation: "Regulation (EU) 2024/1689 — Harmonised Rules on Artificial Intelligence (High-Risk AI Systems)"
+
+sections:
+  - heading: "1. General Description of the AI System"
+    fields:
+      - id: system_description
+        label: "System Description"
+        description: "A detailed description of the AI system, including its general logic, algorithms, and key design choices"
+        required: true
+        source: "latest_audit.model_id"
+        data_path: "model_id"
+
+      - id: intended_purpose
+        label: "Intended Purpose"
+        description: "The intended purpose of the AI system, including the specific context in which it is to be used"
+        required: true
+        source: "latest_audit.intended_purpose"
+        data_path: "latest_audit.intended_purpose"
+        default: "See model registry for intended use documentation"
+
+      - id: deployment_date
+        label: "Deployment Date"
+        description: "Date the system was first deployed or made available"
+        required: true
+        source: "latest_audit.created_at"
+        data_path: "latest_audit.created_at"
+
+      - id: provider_info
+        label: "AI Provider / Deployer"
+        description: "Name and contact details of the provider and, where applicable, of the authorised representative"
+        required: true
+        source: "latest_audit.provider"
+        data_path: "latest_audit.provider"
+        default: "Organisation (see model registry)"
+
+      - id: version_info
+        label: "System Version"
+        description: "Version or unique identifier of the AI system"
+        required: false
+        source: "latest_audit.model_id"
+        data_path: "model_id"
+
+  - heading: "2. Training Data Description"
+    fields:
+      - id: training_data_description
+        label: "Training Dataset Description"
+        description: "Description of the training data, including size, provenance, and key characteristics"
+        required: true
+        source: "bias_profile.dataset_gcs_path"
+        data_path: "latest_audit.training_data"
+        default: "See dataset documentation in model registry"
+
+      - id: data_governance
+        label: "Data Governance Measures"
+        description: "Measures taken to ensure data quality, representativeness, and freedom from bias"
+        required: true
+        source: "scanner.bias_profile"
+        default: "FairLens Scanner performs automated class imbalance, proxy leakage, and label bias detection on all training datasets"
+
+      - id: protected_attributes
+        label: "Protected Attributes Analysed"
+        description: "List of protected characteristics examined for bias"
+        required: true
+        source: "latest_audit.protected_cols"
+        data_path: "latest_audit.protected_cols"
+        default: "See audit report"
+
+  - heading: "3. Testing Methodology and Performance Metrics"
+    fields:
+      - id: testing_methodology
+        label: "Testing Methodology"
+        description: "Description of testing procedures and validation methodology"
+        required: true
+        source: "fairlens.audit"
+        default: "FairLens SDK computes 8 fairness metrics across all protected attribute groups using held-out evaluation data"
+
+      - id: demographic_parity
+        label: "Demographic Parity Difference"
+        description: "Maximum difference in positive prediction rates across demographic groups"
+        required: true
+        source: "latest_audit.metrics.demographic_parity_difference"
+        data_path: "latest_audit.metrics.demographic_parity_difference"
+
+      - id: equalized_odds
+        label: "Equalized Odds Difference"
+        description: "Maximum difference in TPR/FPR across demographic groups"
+        required: true
+        source: "latest_audit.metrics.equalized_odds_difference"
+        data_path: "latest_audit.metrics.equalized_odds_difference"
+
+      - id: disparate_impact
+        label: "Disparate Impact Ratio"
+        description: "Ratio of lowest to highest group positive prediction rate (EEOC 4/5ths rule)"
+        required: true
+        source: "latest_audit.metrics.disparate_impact_ratio"
+        data_path: "latest_audit.metrics.disparate_impact_ratio"
+
+      - id: calibration_error
+        label: "Calibration Error"
+        description: "Maximum difference in positive predictive value across groups"
+        required: true
+        source: "latest_audit.metrics.calibration_error"
+        data_path: "latest_audit.metrics.calibration_error"
+
+      - id: theil_index
+        label: "Theil Index"
+        description: "Information-theoretic inequality measure"
+        required: true
+        source: "latest_audit.metrics.theil_index"
+        data_path: "latest_audit.metrics.theil_index"
+
+      - id: audit_passed
+        label: "Overall Audit Result"
+        description: "Whether the system passed all configured fairness thresholds"
+        required: true
+        source: "latest_audit.passed"
+        data_path: "latest_audit.passed"
+
+  - heading: "4. Human Oversight Mechanisms"
+    fields:
+      - id: fairness_gate
+        label: "CI/CD Fairness Gate"
+        description: "Automated pre-deployment bias check integrated into ML pipeline"
+        required: true
+        source: "gate.policy"
+        default: "Yes — CI/CD gate blocks deployment when any fairness metric exceeds configured threshold"
+
+      - id: real_time_monitoring
+        label: "Real-Time Monitoring"
+        description: "Continuous monitoring of model predictions for fairness drift"
+        required: true
+        source: "monitor.pipeline"
+        default: "Yes — streaming Pub/Sub + Dataflow pipeline with Page-Hinkley drift detection"
+
+      - id: human_approval
+        label: "Human Approval Requirement"
+        description: "Whether human review is required before remediation actions are applied"
+        required: true
+        source: "remediation.playbook.pending_approval"
+        default: "Yes — all Gemini-generated remediation playbooks require explicit human approval before execution"
+
+      - id: incident_response
+        label: "Incident Response Process"
+        description: "Documented procedure for handling detected bias incidents"
+        required: true
+        source: "console.incidents"
+        default: "Automated incident creation, severity classification, playbook generation, and resolution tracking via FairLens Console"
+
+  - heading: "5. Bias Monitoring Procedures"
+    fields:
+      - id: monitoring_frequency
+        label: "Monitoring Frequency"
+        description: "How often fairness metrics are computed on live predictions"
+        required: true
+        source: "monitor.pipeline"
+        default: "Continuous — every prediction is evaluated in 60-second tumbling windows"
+
+      - id: drift_detection
+        label: "Drift Detection Method"
+        description: "Statistical method used to detect changes in fairness metrics over time"
+        required: true
+        source: "monitor.drift.page_hinkley"
+        default: "Page-Hinkley sequential change point detector with configurable sensitivity"
+
+      - id: alerting
+        label: "Alert Configuration"
+        description: "How stakeholders are notified of detected fairness issues"
+        required: true
+        source: "monitor.terraform.alert_policy"
+        default: "Cloud Monitoring alert when equity score drops below 0.80 for 15 minutes"
+
+      - id: remediation_engine
+        label: "Automated Remediation"
+        description: "Whether automated bias mitigation strategies are available"
+        required: false
+        source: "remediation.function"
+        default: "Yes — Gemini 1.5 Pro generates contextual remediation playbooks with code snippets"
+
+  - heading: "6. Transparency and Explainability"
+    fields:
+      - id: explainability_method
+        label: "Explainability Method"
+        description: "Technique used to explain individual predictions and model behavior"
+        required: true
+        source: "explainability.shap_runner"
+        default: "SHAP (SHapley Additive exPlanations) via Vertex Explainable AI"
+
+      - id: feature_attribution
+        label: "Feature Attribution Available"
+        description: "Whether per-group feature importance is computed and stored"
+        required: true
+        source: "explainability.shap_attributions"
+        default: "Yes — per-group SHAP attributions stored in BigQuery shap_attributions table"
+
+      - id: audit_trail
+        label: "Audit Trail"
+        description: "Immutable record of all fairness assessments"
+        required: true
+        source: "compliance.signer"
+        default: "Yes — all compliance PDFs are SHA-256 hashed and signed with Cloud KMS asymmetric keys"

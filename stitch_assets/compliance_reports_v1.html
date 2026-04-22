@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens Compliance Reports</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts (Inter mapped to config) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#e89337",
+                    "on-surface-variant": "#bcc9cd",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed": "#2d1600",
+                    "surface-container": "#1b2122",
+                    "surface": "#0e1416",
+                    "surface-variant": "#303638",
+                    "primary-container": "#06b6d4",
+                    "surface-tint": "#4cd7f6",
+                    "on-primary-container": "#00424f",
+                    "primary": "#4cd7f6",
+                    "on-secondary-fixed-variant": "#5516be",
+                    "on-background": "#dee3e6",
+                    "background": "#0e1416",
+                    "secondary-fixed-dim": "#d0bcff",
+                    "on-surface": "#dee3e6",
+                    "surface-bright": "#343a3c",
+                    "on-primary": "#003640",
+                    "surface-container-lowest": "#090f11",
+                    "tertiary-fixed": "#ffdcbf",
+                    "outline-variant": "#3d494c",
+                    "inverse-surface": "#dee3e6",
+                    "on-secondary": "#3c0091",
+                    "surface-dim": "#0e1416",
+                    "on-secondary-fixed": "#23005c",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "outline": "#869397",
+                    "secondary-fixed": "#e9ddff",
+                    "secondary": "#d0bcff",
+                    "on-tertiary-fixed-variant": "#6a3b00",
+                    "surface-container-low": "#171d1e",
+                    "on-tertiary": "#4b2800",
+                    "primary-fixed": "#acedff",
+                    "on-tertiary-container": "#5b3200",
+                    "surface-container-highest": "#303638",
+                    "primary-fixed-dim": "#4cd7f6",
+                    "on-primary-fixed-variant": "#004e5c",
+                    "on-primary-fixed": "#001f26",
+                    "tertiary": "#ffb873",
+                    "surface-container-high": "#252b2d",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#2b3133",
+                    "on-secondary-container": "#c4abff",
+                    "secondary-container": "#571bc1",
+                    "inverse-primary": "#00687a",
+                    "tertiary-fixed-dim": "#ffb873"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base_unit": "4px",
+                    "card_padding": "20px",
+                    "topbar_height": "64px",
+                    "container_padding": "24px",
+                    "gutter": "16px",
+                    "sidebar_width": "240px"
+            },
+            "fontFamily": {
+                    "h3": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "h1": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "mono": ["Inter"],
+                    "h2": ["Inter"]
+            },
+            "fontSize": {
+                    "h3": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "h1": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "mono": ["13px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "h2": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Base application styles */
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen flex overflow-hidden">
+<!-- JSON: SideNavBar Component -->
+<nav class="w-[240px] h-screen border-r fixed left-0 top-0 bg-slate-900 border-slate-800/50 flex flex-col h-full py-4 shadow-none z-40">
+<!-- Header -->
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-cyan-500/20 flex items-center justify-center border border-cyan-500/50">
+<span class="material-symbols-outlined text-cyan-500 text-lg">shield</span>
+</div>
+<div>
+<h2 class="text-cyan-500 font-black tracking-tighter text-lg leading-none">FairLens Console</h2>
+<p class="font-sans text-[10px] uppercase tracking-widest font-bold text-slate-500 mt-1">Enterprise Governance</p>
+</div>
+</div>
+<!-- Main Tabs -->
+<div class="flex-1 flex flex-col gap-1 px-2">
+<!-- Dashboard -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">dashboard</span>
+<span>Dashboard</span>
+</div>
+<!-- Model Registry -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+<span>Model Registry</span>
+</div>
+<!-- Incidents -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">report_problem</span>
+<span>Incidents</span>
+</div>
+<!-- Compliance (ACTIVE) -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-500">
+<span class="material-symbols-outlined text-lg">gavel</span>
+<span>Compliance</span>
+</div>
+<!-- Benchmarks -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">analytics</span>
+<span>Benchmarks</span>
+</div>
+<!-- Settings -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span>Settings</span>
+</div>
+</div>
+<!-- Footer Tabs -->
+<div class="mt-auto px-2 flex flex-col gap-1 border-t border-slate-800/50 pt-4">
+<!-- Documentation -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">menu_book</span>
+<span>Documentation</span>
+</div>
+<!-- Support -->
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-slate-800/80 transition-all duration-150 font-sans text-xs uppercase tracking-widest font-bold rounded text-slate-400 hover:text-slate-200">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+<span>Support</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-[240px] flex flex-col min-w-0 bg-background relative z-10">
+<!-- JSON: TopNavBar Component -->
+<header class="h-16 w-full border-b sticky top-0 z-50 bg-slate-900 border-slate-800 shadow-none flex justify-between items-center px-6">
+<div class="flex items-center gap-2 text-cyan-500 font-sans antialiased text-sm font-medium tracking-tight">
+<span class="text-slate-400">Governance</span>
+<span class="material-symbols-outlined text-sm text-slate-600">chevron_right</span>
+<span class="text-cyan-400 font-semibold cursor-pointer active:opacity-80">Compliance</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="font-sans antialiased text-sm font-medium tracking-tight text-slate-400 flex items-center gap-2 cursor-pointer hover:bg-slate-800/50 transition-colors duration-200 px-3 py-1.5 rounded">
+<span class="material-symbols-outlined text-lg">corporate_fare</span>
+<span>Global Corp HQ</span>
+<span class="material-symbols-outlined text-sm">unfold_more</span>
+</div>
+<div class="flex items-center gap-4 border-l border-slate-800 pl-6">
+<span class="material-symbols-outlined text-slate-400 hover:text-cyan-400 cursor-pointer active:opacity-80 transition-colors duration-200">notifications</span>
+<span class="material-symbols-outlined text-slate-400 hover:text-cyan-400 cursor-pointer active:opacity-80 transition-colors duration-200">verified_user</span>
+<div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 overflow-hidden cursor-pointer">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtQcIxcjWhHxPtxXVo7X5cLMCQH6U7T7XwYMwn5ywrlqSnqFyuTzETSvOH__ckbWrjd-jnx65LXA-d3d49Jp927k2VhPJb9yqi5qup6DcNmEr1mH_4X6Bena_nTE6iRL-ksKHqc1aAJTV0TGg7qiVNdy5Brkl3bcyEgeZkzyCG08-lelZ1u8DsFx4G5ay3--2ye35VrQjDDCVsjbRvy8X7x4yW7ENiYCKOXSXjYEnZd4SqvCjF7UqZb0Amu2WYYyAxrIaWVA27kzXZ"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-container_padding">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-gutter">
+<div>
+<h1 class="font-h1 text-h1 text-on-background">Compliance Reports</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Immutable, audit-ready regulatory documentation generated via KMS.</p>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-4 py-2.5 rounded-DEFAULT hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-2 tracking-widest uppercase">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Generate Report
+                </button>
+</div>
+<!-- Data Table Container (Level 1 Elevation) -->
+<div class="bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- Table Toolbar -->
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="bg-surface-container-lowest border border-outline-variant rounded-DEFAULT py-1.5 pl-9 pr-3 text-body-sm font-body-sm text-on-surface focus:border-primary focus:ring-1 focus:ring-primary w-64 placeholder-on-surface-variant/50" placeholder="Search Report ID or Model..." type="text"/>
+</div>
+<button class="flex items-center gap-2 border border-outline-variant bg-surface-container text-on-surface-variant font-label-caps text-label-caps px-3 py-1.5 rounded-DEFAULT hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+                            Filter
+                        </button>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">
+                        Showing 1-5 of 142 reports
+                    </div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant">
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap">Report ID</th>
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap">Model</th>
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap">Framework</th>
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap">Generated At</th>
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap text-center">KMS Signed</th>
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap">SHA-256</th>
+<th class="px-5 py-3 font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest whitespace-nowrap text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface whitespace-nowrap">REP-2023-8941</td>
+<td class="px-5 py-3.5 font-h3 text-h3 text-on-surface whitespace-nowrap">Credit Risk v2.4</td>
+<td class="px-5 py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-secondary-container/20 text-secondary border border-secondary-container/50">
+                                        EU AI Act
+                                    </span>
+</td>
+<td class="px-5 py-3.5 font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Oct 24, 2023 14:30 UTC</td>
+<td class="px-5 py-3.5 text-center whitespace-nowrap">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</td>
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface-variant text-[11px] whitespace-nowrap">a3f82...9b1c7</td>
+<td class="px-5 py-3.5 text-right whitespace-nowrap">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high" title="Download Report">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface whitespace-nowrap">REP-2023-8940</td>
+<td class="px-5 py-3.5 font-h3 text-h3 text-on-surface whitespace-nowrap">Resume Screener NLP</td>
+<td class="px-5 py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-tertiary-container/20 text-tertiary border border-tertiary-container/50">
+                                        EEOC Bias Audit
+                                    </span>
+</td>
+<td class="px-5 py-3.5 font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Oct 23, 2023 09:15 UTC</td>
+<td class="px-5 py-3.5 text-center whitespace-nowrap">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</td>
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface-variant text-[11px] whitespace-nowrap">f7e19...2a0d4</td>
+<td class="px-5 py-3.5 text-right whitespace-nowrap">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high" title="Download Report">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface whitespace-nowrap">REP-2023-8939</td>
+<td class="px-5 py-3.5 font-h3 text-h3 text-on-surface whitespace-nowrap">Algorithmic Trading Bot</td>
+<td class="px-5 py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-primary/10 text-primary border border-primary/30">
+                                        RBI-SEBI Algorithmic
+                                    </span>
+</td>
+<td class="px-5 py-3.5 font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Oct 21, 2023 16:45 UTC</td>
+<td class="px-5 py-3.5 text-center whitespace-nowrap">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</td>
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface-variant text-[11px] whitespace-nowrap">c2b84...8e5f1</td>
+<td class="px-5 py-3.5 text-right whitespace-nowrap">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high" title="Download Report">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 (Warning State) -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors bg-error-container/5">
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface whitespace-nowrap">REP-2023-8938</td>
+<td class="px-5 py-3.5 font-h3 text-h3 text-on-surface whitespace-nowrap">Customer Churn Predictor</td>
+<td class="px-5 py-3.5 whitespace-nowrap">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-secondary-container/20 text-secondary border border-secondary-container/50">
+                                        EU AI Act
+                                    </span>
+</td>
+<td class="px-5 py-3.5 font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">Oct 20, 2023 11:00 UTC</td>
+<td class="px-5 py-3.5 text-center whitespace-nowrap">
+<span class="material-symbols-outlined text-error text-[20px]" style="font-variation-settings: 'FILL' 1;">error</span>
+</td>
+<td class="px-5 py-3.5 font-mono text-mono text-on-surface-variant text-[11px] whitespace-nowrap">d9a33...1c4b2</td>
+<td class="px-5 py-3.5 text-right whitespace-nowrap">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1 rounded hover:bg-surface-container-high" title="Download Report">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+<!-- Generate Report Modal Overlay (Level 2 Elevation) -->
+<!-- Note: Displaying visibly as requested by prompt to show the design of the modal -->
+<div class="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm">
+<div class="bg-surface-container-high border border-outline-variant rounded-xl w-full max-w-[520px] shadow-2xl flex flex-col overflow-hidden">
+<!-- Modal Header -->
+<div class="px-6 py-5 border-b border-outline-variant flex justify-between items-center bg-surface-container-highest">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface">Generate Compliance Report</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Select a model and target regulatory framework.</p>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors p-1 rounded-DEFAULT hover:bg-surface-variant">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-6 flex flex-col gap-6">
+<!-- Model Picker -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Target Model</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant rounded-DEFAULT py-2.5 pl-4 pr-10 text-body-md font-body-md text-on-surface appearance-none focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none">
+<option>Credit Risk v2.4 (Prod)</option>
+<option>Resume Screener NLP (Staging)</option>
+<option>Algorithmic Trading Bot (Prod)</option>
+<option>Customer Churn Predictor v1.2</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Framework Selector -->
+<div class="flex flex-col gap-3">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Regulatory Framework</label>
+<div class="grid grid-cols-1 gap-3">
+<!-- Option 1 -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-primary bg-primary/5 cursor-pointer transition-colors relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<input checked="" class="mt-0.5 text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary focus:ring-offset-background" name="framework" type="radio"/>
+<div>
+<span class="font-h3 text-h3 text-on-surface block mb-1">EU AI Act Assessment</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Generates comprehensive Title III documentation including risk categorization and bias metrics.</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-outline-variant bg-surface-container-lowest hover:border-outline cursor-pointer transition-colors">
+<input class="mt-0.5 text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary focus:ring-offset-background" name="framework" type="radio"/>
+<div>
+<span class="font-h3 text-h3 text-on-surface block mb-1">EEOC Algorithmic Fairness</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Focuses on disparate impact analysis and four-fifths rule validation for employment models.</span>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="flex items-start gap-3 p-4 rounded-lg border border-outline-variant bg-surface-container-lowest hover:border-outline cursor-pointer transition-colors">
+<input class="mt-0.5 text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary focus:ring-offset-background" name="framework" type="radio"/>
+<div>
+<span class="font-h3 text-h3 text-on-surface block mb-1">RBI-SEBI Model Audit</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Financial stability controls, explainability metrics, and drift monitoring documentation.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 border-t border-outline-variant bg-surface-container-highest flex justify-end gap-3">
+<button class="px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-on-surface hover:bg-surface-variant transition-colors border border-transparent">
+                    Cancel
+                </button>
+<button class="px-5 py-2 rounded-DEFAULT font-label-caps text-label-caps uppercase tracking-widest bg-primary text-on-primary hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+                    Generate &amp; Sign
+                </button>
+</div>
+</div>
+</div>
+</body></html>

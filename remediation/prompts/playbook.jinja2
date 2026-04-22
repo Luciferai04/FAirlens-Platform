@@ -1,0 +1,49 @@
+You are a senior ML fairness engineer. A bias incident has been detected in a
+production model. Generate a structured remediation playbook in JSON format.
+
+INCIDENT DETAILS:
+- Model ID: {{ incident.model_id }}
+- Model Type: {{ incident.get('model_type', 'classification') }}
+- Metric: {{ incident.metric_name }}
+- Current value: {{ incident.current_value }}
+- Threshold: {{ incident.threshold }}
+- Severity: {{ incident.severity }}
+- Protected attribute: {{ incident.get('sensitive_col', 'unknown') }}
+- Business domain: {{ incident.get('domain', 'unspecified') }}
+
+{% if incident.get('all_metrics') %}
+ALL METRIC VALUES:
+{% for metric, value in incident.all_metrics.items() %}
+- {{ metric }}: {{ value }}{% if incident.get('thresholds', {}).get(metric) %} (threshold: {{ incident.thresholds[metric] }}){% endif %}
+{% endfor %}
+
+FAILED METRICS:
+{% for metric in incident.get('failed_metrics', []) %}
+- {{ metric }}
+{% endfor %}
+{% endif %}
+
+{% if incident.get('business_context') %}
+BUSINESS CONTEXT:
+{{ incident.business_context }}
+{% endif %}
+
+Your JSON response MUST follow this exact schema:
+{
+  "playbook_id": "string — unique identifier",
+  "incident_id": "{{ incident.incident_id }}",
+  "strategies": [
+    {
+      "name": "string — concise strategy name",
+      "description": "string — detailed implementation guidance",
+      "technique": "reweighting | resampling | feature_removal | threshold_adjustment | retraining | augmentation",
+      "code_snippet": "string — Python code example",
+      "estimated_effort": "low | medium | high"
+    }
+  ],
+  "root_cause_analysis": "string — 2-3 sentence hypothesis about why this bias exists",
+  "priority_order": ["strategy_name_1", "strategy_name_2", "strategy_name_3"]
+}
+
+Generate EXACTLY 3 strategies. Order them by priority: most immediate first.
+Respond ONLY with valid JSON. No markdown, no preamble, no explanation outside the JSON.

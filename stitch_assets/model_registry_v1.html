@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens Model Registry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#e89337",
+                        "on-surface-variant": "#bcc9cd",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#2d1600",
+                        "surface-container": "#1b2122",
+                        "surface": "#0e1416",
+                        "surface-variant": "#303638",
+                        "primary-container": "#06b6d4",
+                        "surface-tint": "#4cd7f6",
+                        "on-primary-container": "#00424f",
+                        "primary": "#4cd7f6",
+                        "on-secondary-fixed-variant": "#5516be",
+                        "on-background": "#dee3e6",
+                        "background": "#0e1416",
+                        "secondary-fixed-dim": "#d0bcff",
+                        "on-surface": "#dee3e6",
+                        "surface-bright": "#343a3c",
+                        "on-primary": "#003640",
+                        "surface-container-lowest": "#090f11",
+                        "tertiary-fixed": "#ffdcbf",
+                        "outline-variant": "#3d494c",
+                        "inverse-surface": "#dee3e6",
+                        "on-secondary": "#3c0091",
+                        "surface-dim": "#0e1416",
+                        "on-secondary-fixed": "#23005c",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "outline": "#869397",
+                        "secondary-fixed": "#e9ddff",
+                        "secondary": "#d0bcff",
+                        "on-tertiary-fixed-variant": "#6a3b00",
+                        "surface-container-low": "#171d1e",
+                        "on-tertiary": "#4b2800",
+                        "primary-fixed": "#acedff",
+                        "on-tertiary-container": "#5b3200",
+                        "surface-container-highest": "#303638",
+                        "primary-fixed-dim": "#4cd7f6",
+                        "on-primary-fixed-variant": "#004e5c",
+                        "on-primary-fixed": "#001f26",
+                        "tertiary": "#ffb873",
+                        "surface-container-high": "#252b2d",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#2b3133",
+                        "on-secondary-container": "#c4abff",
+                        "secondary-container": "#571bc1",
+                        "inverse-primary": "#00687a",
+                        "tertiary-fixed-dim": "#ffb873"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base_unit": "4px",
+                        "card_padding": "20px",
+                        "topbar_height": "64px",
+                        "container_padding": "24px",
+                        "gutter": "16px",
+                        "sidebar_width": "240px"
+                    },
+                    "fontFamily": {
+                        "h3": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "h1": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "mono": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h3": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "h1": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "mono": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "h2": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0f172a; color: #dee3e6; }
+        .bg-level-1 { background-color: #1e293b; }
+        .bg-level-2 { background-color: #334155; }
+        .border-level-1 { border-color: rgba(51, 65, 85, 0.5); }
+    </style>
+</head>
+<body class="font-body-md text-on-surface antialiased flex h-screen overflow-hidden bg-background">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full py-4 w-[240px] h-screen border-r fixed left-0 top-0 border-slate-800/50 bg-slate-900 z-40">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined font-bold text-xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div>
+<div class="text-cyan-500 font-black tracking-tighter text-lg leading-tight">FairLens Console</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant">Enterprise Governance</div>
+</div>
+</div>
+<div class="flex-1 px-3 space-y-1 overflow-y-auto">
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-sm text-body-sm font-medium">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-500 rounded-l">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="font-body-sm text-body-sm font-medium">Model Registry</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">report_problem</span>
+<span class="font-body-sm text-body-sm font-medium">Incidents</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">gavel</span>
+<span class="font-body-sm text-body-sm font-medium">Compliance</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span class="font-body-sm text-body-sm font-medium">Benchmarks</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-sm text-body-sm font-medium">Settings</span>
+</div>
+</div>
+<div class="mt-auto px-3 space-y-1 pt-4 border-t border-slate-800/50">
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span class="font-body-sm text-body-sm font-medium">Documentation</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 cursor-pointer text-slate-400 hover:text-slate-200 hover:bg-slate-800/80 transition-all duration-150 rounded">
+<span class="material-symbols-outlined text-[20px]">contact_support</span>
+<span class="font-body-sm text-body-sm font-medium">Support</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[240px] h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 h-16 w-full sticky top-0 z-50 bg-slate-900 border-b border-slate-800 shadow-none">
+<div class="flex items-center md:hidden">
+<span class="text-xl font-black text-cyan-500 tracking-tighter">FairLens</span>
+</div>
+<div class="hidden md:flex items-center space-x-2 text-slate-400 font-body-sm text-body-sm">
+<span>Model Registry</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-medium">All Models</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-level-2/50 border border-slate-700/50 text-slate-300 font-body-sm text-body-sm cursor-pointer hover:bg-level-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">domain</span>
+<span>Global Corp HQ</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</div>
+<div class="flex items-center gap-2 border-l border-slate-700/50 pl-4 ml-2">
+<button class="p-2 rounded-full text-slate-400 hover:bg-slate-800/50 hover:text-cyan-400 transition-colors duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-full text-slate-400 hover:bg-slate-800/50 hover:text-cyan-400 transition-colors duration-200">
+<span class="material-symbols-outlined">verified_user</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-level-2 ml-2 overflow-hidden border border-slate-700">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDvMwsA-KxjInmC51gS8GS_evcnmPcksL0h9HLWeq5LYUBufF5TEKwP2iEfK_2LTxU4T2IEcwxaSteBU8dKZ_D8MJqG7rlNJrgc12j3SbMLJEsmgsgsfGOnL19baIcB7NGnS9omkZyU9T-KNGr6Uoc845NGcze1ryx8LCVw5H6PvED7qAjAdr4xy5MPd5zC1wUtptKZFdP4kLhiOQB_OAW8n1XcUnA5wCx45mGoSwOSRCyCiDIhKgrk1ysTc9zxMPjoayUYhtfTj3K"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 overflow-y-auto p-6">
+<div class="max-w-[1600px] mx-auto space-y-6">
+<!-- Page Header & Actions -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface mb-1">Model Registry</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage and audit registered models across all environments.</p>
+</div>
+<div class="flex items-center gap-3 w-full sm:w-auto">
+<div class="relative w-full sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+<input class="w-full bg-[#0f172a] border border-slate-700 rounded text-on-surface font-body-sm text-body-sm pl-9 pr-3 py-2 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/20 placeholder-slate-500" placeholder="Search models..." type="text"/>
+</div>
+<button class="bg-[#1e293b] border border-slate-700 text-on-surface hover:bg-slate-800 px-3 py-2 rounded flex items-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span class="font-body-sm text-body-sm font-medium">Filter</span>
+</button>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary px-4 py-2 rounded flex items-center gap-2 transition-colors font-body-sm text-body-sm font-medium whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                            Trigger Audit
+                        </button>
+</div>
+</div>
+<!-- KPI Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-level-1 border border-level-1 rounded-lg p-card_padding relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-cyan-500/10 to-transparent"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">TOTAL MODELS</div>
+<div class="font-h1 text-[32px] font-semibold text-on-surface">142</div>
+<div class="mt-2 flex items-center gap-1 font-body-sm text-body-sm text-emerald-400">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+12 this month</span>
+</div>
+</div>
+<div class="bg-level-1 border border-level-1 rounded-lg p-card_padding relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-red-500/10 to-transparent"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">MODELS FAILING AUDIT</div>
+<div class="font-h1 text-[32px] font-semibold text-error">3</div>
+<div class="mt-2 flex items-center gap-1 font-body-sm text-body-sm text-error">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+<span>Requires attention</span>
+</div>
+</div>
+<div class="bg-level-1 border border-level-1 rounded-lg p-card_padding relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-orange-500/10 to-transparent"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">MODELS IN WARNING</div>
+<div class="font-h1 text-[32px] font-semibold text-tertiary">14</div>
+<div class="mt-2 flex items-center gap-1 font-body-sm text-body-sm text-slate-400">
+<span>Drift detected</span>
+</div>
+</div>
+<div class="bg-level-1 border border-level-1 rounded-lg p-card_padding relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-emerald-500/10 to-transparent"></div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">AVG EQUITY SCORE</div>
+<div class="font-h1 text-[32px] font-semibold text-on-surface">94.2<span class="text-lg text-slate-500">%</span></div>
+<div class="mt-2 flex items-center gap-1 font-body-sm text-body-sm text-emerald-400">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Within bounds</span>
+</div>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-level-1 border border-level-1 rounded-lg overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-slate-700/50 bg-slate-800/30">
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400 w-8"></th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400">Model Name</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400">Provider</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400">Protected Attr.</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400 w-32">Equity Score</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400">Last Audited</th>
+<th class="px-4 py-3 font-label-caps text-label-caps text-slate-400 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<!-- Row 1: Expanded -->
+<tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors cursor-pointer bg-slate-800/20">
+<td class="px-4 py-4 text-slate-400">
+<span class="material-symbols-outlined text-[18px] transform rotate-90">chevron_right</span>
+</td>
+<td class="px-4 py-4">
+<div class="font-medium text-on-surface flex items-center gap-2">
+                                            Credit_Scoring_V3
+                                            <span class="px-1.5 py-0.5 rounded text-[10px] bg-level-2 text-slate-300 font-mono">v3.2.1</span>
+</div>
+<div class="text-slate-500 text-[12px] mt-0.5 font-mono">ID: mod_8x92ja</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded bg-[#4285F4]/20 text-[#4285F4] flex items-center justify-center text-[10px] font-bold">V</div>
+<span class="text-slate-300">Vertex AI</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full bg-level-2 border border-slate-700 text-slate-300 text-[11px]">Age</span>
+<span class="px-2 py-0.5 rounded-full bg-level-2 border border-slate-700 text-slate-300 text-[11px]">Gender</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="text-error font-medium">78%</span>
+<!-- Sparkline representation -->
+<svg class="w-16 h-4" viewbox="0 0 64 16">
+<path d="M0,8 L10,8 L20,12 L30,4 L40,6 L50,14 L64,14" fill="none" stroke="#ffb4ab" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+<circle cx="64" cy="14" fill="#ffb4ab" r="2"></circle>
+</svg>
+</div>
+</td>
+<td class="px-4 py-4 text-slate-400 font-mono text-[12px]">2 hours ago</td>
+<td class="px-4 py-4 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-error/10 text-error border border-error/20 text-[11px] font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined text-[12px]">cancel</span>
+                                            Failing
+                                        </span>
+</td>
+</tr>
+<!-- Expanded Content -->
+<tr class="border-b border-slate-700/50 bg-[#0f172a]/50">
+<td class="p-0" colspan="7">
+<div class="px-12 py-4 border-l-2 border-error ml-4 my-2 rounded-r-lg bg-level-1/50">
+<div class="grid grid-cols-3 gap-6">
+<div>
+<div class="font-label-caps text-label-caps text-slate-400 mb-2">METRIC BREAKDOWN</div>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-[12px] mb-1">
+<span class="text-slate-300">Demographic Parity (Gender)</span>
+<span class="text-error font-medium">0.68</span>
+</div>
+<div class="w-full bg-level-2 rounded-full h-1.5">
+<div class="bg-error h-1.5 rounded-full" style="width: 68%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[12px] mb-1">
+<span class="text-slate-300">Equal Opportunity (Age)</span>
+<span class="text-tertiary font-medium">0.82</span>
+</div>
+<div class="w-full bg-level-2 rounded-full h-1.5">
+<div class="bg-tertiary h-1.5 rounded-full" style="width: 82%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-2">
+<div class="font-label-caps text-label-caps text-slate-400 mb-2">LATEST INCIDENT LOG</div>
+<div class="bg-[#0f172a] rounded border border-slate-700/50 p-3 font-mono text-[11px] text-slate-400 space-y-1">
+<div><span class="text-slate-500">[10:42:01 UTC]</span> <span class="text-cyan-400">AUDIT_START</span> Triggered by system schedule.</div>
+<div><span class="text-slate-500">[10:42:15 UTC]</span> <span class="text-orange-400">WARN</span> Drift detected in feature 'income_bracket'.</div>
+<div><span class="text-slate-500">[10:42:45 UTC]</span> <span class="text-error">FAIL</span> Demographic parity threshold (0.8) breached for protected attribute 'Gender'. Value: 0.68.</div>
+</div>
+<div class="mt-3 flex justify-end gap-2">
+<button class="px-3 py-1.5 rounded border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10 text-[12px] font-medium transition-colors">View Full Report</button>
+<button class="px-3 py-1.5 rounded bg-level-2 text-slate-300 hover:bg-slate-600 text-[12px] font-medium transition-colors">Acknowledge</button>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors cursor-pointer">
+<td class="px-4 py-4 text-slate-500">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</td>
+<td class="px-4 py-4">
+<div class="font-medium text-on-surface flex items-center gap-2">
+                                            Fraud_Detection_XGB
+                                            <span class="px-1.5 py-0.5 rounded text-[10px] bg-level-2 text-slate-300 font-mono">v1.0.5</span>
+</div>
+<div class="text-slate-500 text-[12px] mt-0.5 font-mono">ID: mod_f92kd1</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded bg-orange-500/20 text-orange-500 flex items-center justify-center text-[10px] font-bold">SK</div>
+<span class="text-slate-300">scikit-learn</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full bg-level-2 border border-slate-700 text-slate-300 text-[11px]">Zip Code</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-medium">85%</span>
+<svg class="w-16 h-4" viewbox="0 0 64 16">
+<path d="M0,12 L10,10 L20,8 L30,12 L40,8 L50,6 L64,10" fill="none" stroke="#ffb873" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</td>
+<td class="px-4 py-4 text-slate-400 font-mono text-[12px]">5 hours ago</td>
+<td class="px-4 py-4 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-tertiary/10 text-tertiary border border-tertiary/20 text-[11px] font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined text-[12px]">info</span>
+                                            Warning
+                                        </span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition-colors cursor-pointer">
+<td class="px-4 py-4 text-slate-500">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</td>
+<td class="px-4 py-4">
+<div class="font-medium text-on-surface flex items-center gap-2">
+                                            Churn_Predictor
+                                            <span class="px-1.5 py-0.5 rounded text-[10px] bg-level-2 text-slate-300 font-mono">v2.1.0</span>
+</div>
+<div class="text-slate-500 text-[12px] mt-0.5 font-mono">ID: mod_c81la4</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded bg-[#4285F4]/20 text-[#4285F4] flex items-center justify-center text-[10px] font-bold">V</div>
+<span class="text-slate-300">Vertex AI</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded-full bg-level-2 border border-slate-700 text-slate-300 text-[11px]">Age</span>
+<span class="px-2 py-0.5 rounded-full bg-level-2 border border-slate-700 text-slate-300 text-[11px]">Marital Status</span>
+</div>
+</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<span class="text-emerald-400 font-medium">96%</span>
+<svg class="w-16 h-4" viewbox="0 0 64 16">
+<path d="M0,10 L10,8 L20,6 L30,4 L40,6 L50,4 L64,2" fill="none" stroke="#4ade80" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</td>
+<td class="px-4 py-4 text-slate-400 font-mono text-[12px]">1 day ago</td>
+<td class="px-4 py-4 text-right">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-medium uppercase tracking-wider">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+                                            Passing
+                                        </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-4 py-3 border-t border-slate-700/50 flex items-center justify-between bg-level-1">
+<div class="font-body-sm text-body-sm text-slate-400">
+                            Showing <span class="font-medium text-slate-300">1</span> to <span class="font-medium text-slate-300">3</span> of <span class="font-medium text-slate-300">142</span> models
+                        </div>
+<div class="flex gap-1">
+<button class="px-3 py-1 rounded bg-[#0f172a] border border-slate-700 text-slate-500 cursor-not-allowed font-body-sm text-body-sm">Previous</button>
+<button class="px-3 py-1 rounded bg-level-2 border border-slate-600 text-on-surface font-body-sm text-body-sm hover:bg-slate-600 transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

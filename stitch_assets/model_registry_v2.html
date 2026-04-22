@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens - Model Registry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 20px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "tertiary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary-fixed-dim": "#61dbb4",
+                        "on-primary-container": "#003024",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-container": "#2a2a2a",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface": "#131313",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#b4b5b5",
+                        "primary-container": "#12a480",
+                        "inverse-primary": "#006c52",
+                        "on-tertiary": "#303030",
+                        "primary": "#61dbb4",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-surface-variant": "#bccac2",
+                        "surface-tint": "#61dbb4",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-container": "#454747",
+                        "error": "#ffb4ab",
+                        "on-primary": "#00382a",
+                        "primary-fixed": "#7ff8cf",
+                        "on-secondary": "#2f3131",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-background": "#e5e2e1",
+                        "outline-variant": "#3d4a44",
+                        "tertiary": "#c8c6c5",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-container": "#929090",
+                        "surface-container": "#201f1f",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "background": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed-variant": "#00513d",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#002117",
+                        "secondary": "#c6c6c6",
+                        "outline": "#86948d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "container-max": "1200px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "code": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "code": ["14px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md flex h-screen overflow-hidden antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared Component: SideNavBar -->
+<nav class="fixed left-0 top-0 h-full w-[240px] border-r border-[#2f2f2f] bg-[#171717] flex flex-col py-6 space-y-2 z-50 text-sm font-medium font-['Inter']">
+<div class="px-6 mb-lg">
+<div class="text-white font-semibold text-lg tracking-tight">Governance Console</div>
+<div class="text-[#b4b4b4] mt-1 text-xs uppercase tracking-wider">Enterprise Tier</div>
+</div>
+<div class="flex-1 space-y-1">
+<!-- Inactive -->
+<a class="flex items-center px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">dashboard</span>
+                Dashboard
+            </a>
+<!-- Active (Model Registry) -->
+<a class="flex items-center px-6 py-3 text-white border-l-2 border-[#10a37f] bg-[#212121] transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+                Model Registry
+            </a>
+<!-- Inactive -->
+<a class="flex items-center px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">report_problem</span>
+                Incidents
+            </a>
+<a class="flex items-center px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">verified_user</span>
+                Compliance
+            </a>
+<a class="flex items-center px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">analytics</span>
+                Benchmarks
+            </a>
+<a class="flex items-center px-6 py-3 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mr-3 text-[18px]">settings</span>
+                Settings
+            </a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="ml-[240px] flex-1 flex flex-col h-full bg-background relative z-0">
+<!-- Shared Component: TopNavBar -->
+<header class="docked full-width top-0 h-16 border-b border-[#2f2f2f] bg-[#0d0d0d] flex justify-between items-center px-6 w-full sticky z-40 flat no shadows text-[#10a37f] font-['Inter'] antialiased tracking-tight">
+<div class="flex items-center">
+<div class="text-lg font-bold text-white tracking-wide">FairLens</div>
+</div>
+<div class="flex items-center space-x-md text-[#b4b4b4]">
+<span class="text-sm font-medium cursor-pointer hover:text-white transition-colors duration-200 active:scale-95">Google SSO</span>
+<div class="h-4 w-px bg-outline-variant mx-2"></div>
+<button class="flex items-center justify-center p-1 rounded-full hover:bg-surface-container hover:text-white transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center p-1 rounded-full hover:bg-surface-container hover:text-white transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+<button class="w-8 h-8 rounded-full ml-sm overflow-hidden border border-[#2f2f2f] cursor-pointer active:scale-95 transition-transform">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="minimalist graphic avatar representing an admin user in shades of dark grey and brand green" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1UpuWjFfsnJOsEH7SMQYdEgV9UZ-pR0f0FK6WnodYxZBnqwFh2ha80ZoeSWmLL9F05ekPgUHsaiSLdgyqVkcKSqiNoe3NSXob3yi7nVaRHj9zcob-8EYjyIx9Ddc53NKbbR50EMJc9YYk2pktuRo-EW3IQ4ZMYiGYFLqc2fXhr_-8_pxevLmgDpNrQHdGOgu0XFwuu7WKsggThV000ZKadIvpnLJcilac7C5A-YaKdulPJKcHoUrdKZSndrauT9fCy_DsH-Lr34qg"/>
+</button>
+</div>
+</header>
+<!-- Page Content Viewport -->
+<main class="flex-1 overflow-y-auto p-xl">
+<div class="max-w-container-max mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h1 class="font-h1 text-h1 text-on-surface mb-xs">Model Registry</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Manage, monitor, and audit registered machine learning models for equity compliance.</p>
+</div>
+<button class="bg-primary-container hover:bg-primary-fixed transition-colors text-on-primary-container font-label-sm text-label-sm px-4 py-2.5 rounded flex items-center space-x-2 border border-primary-fixed-dim/30">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>Trigger Audit</span>
+</button>
+</div>
+<!-- Controls & Filters -->
+<div class="flex items-center justify-between mb-md p-md bg-surface border border-outline-variant rounded-lg">
+<div class="flex items-center space-x-md w-full max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded text-on-surface font-body-md text-body-md pl-10 pr-3 py-2 focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim focus:outline-none transition-all placeholder:text-on-surface-variant/50" placeholder="Search models by name or provider..." type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-sm">
+<button class="flex items-center space-x-1 px-3 py-2 rounded border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface font-body-md text-body-md transition-colors">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">filter_list</span>
+<span>Status: All</span>
+</button>
+<button class="flex items-center space-x-1 px-3 py-2 rounded border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface font-body-md text-body-md transition-colors">
+<span>Provider</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<!-- Data Table -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[25%]">Model Name</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[10%]">Version</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[15%]">Provider</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[15%]">Protected Attrs</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[10%]">Equity Trend</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[10%]">Last Audited</th>
+<th class="font-label-sm text-label-sm text-on-surface-variant py-3 px-4 font-medium uppercase tracking-wider w-[10%] text-right">Status</th>
+<th class="w-10"></th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant/50">
+<!-- Row 1: Passing -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="py-3 px-4 font-medium">Credit Scorer Baseline</td>
+<td class="py-3 px-4"><span class="bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant font-code text-code text-[12px]">v3.1.0</span></td>
+<td class="py-3 px-4 text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1.5">cloud</span> Vertex AI
+                                </td>
+<td class="py-3 px-4">
+<div class="flex gap-1 flex-wrap">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-[11px] text-on-surface-variant">Age</span>
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-[11px] text-on-surface-variant">Income</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<svg class="text-primary-fixed opacity-70" fill="none" height="20" viewbox="0 0 60 20" width="60">
+<path d="M0 15 L 15 12 L 30 14 L 45 8 L 60 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</td>
+<td class="py-3 px-4 text-on-surface-variant text-[13px]">2 hours ago</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-1 rounded bg-primary-fixed-dim/10 text-primary border border-primary-fixed-dim/20 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary mr-1.5"></span> Passing
+                                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant text-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</td>
+</tr>
+<!-- Row 2: Warning (Expanded State Parent) -->
+<tr class="bg-surface-container-lowest border-l-2 border-l-tertiary">
+<td class="py-3 px-4 font-medium text-white">Loan Approval Engine</td>
+<td class="py-3 px-4"><span class="bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant font-code text-code text-[12px]">v4.2.1</span></td>
+<td class="py-3 px-4 text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1.5">terminal</span> sklearn
+                                </td>
+<td class="py-3 px-4">
+<div class="flex gap-1 flex-wrap">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-[11px] text-on-surface-variant">Race</span>
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-[11px] text-on-surface-variant">Gender</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<svg class="text-tertiary opacity-70" fill="none" height="20" viewbox="0 0 60 20" width="60">
+<path d="M0 5 L 15 8 L 30 5 L 45 12 L 60 15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</td>
+<td class="py-3 px-4 text-on-surface-variant text-[13px]">1 day ago</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container-high text-tertiary border border-tertiary/30 font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary mr-1.5"></span> Warning
+                                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface text-center">
+<span class="material-symbols-outlined text-[18px] transform rotate-90 transition-transform">chevron_right</span>
+</td>
+</tr>
+<!-- Expanded Inline Content for Row 2 -->
+<tr class="bg-surface-container-lowest border-b-2 border-b-outline-variant">
+<td class="p-0" colspan="8">
+<div class="px-xl py-lg border-t border-outline-variant/30">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-h3 text-h3 text-on-surface">Equity Metric Breakdown</h3>
+<a class="text-primary hover:text-primary-fixed-dim font-body-md text-body-md flex items-center transition-colors" href="#">
+                                                View Full Report <span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
+</a>
+</div>
+<!-- Bento Grid for Metrics -->
+<div class="grid grid-cols-3 gap-md">
+<!-- Metric Card 1: Failing -->
+<div class="bg-surface border border-error/30 rounded-lg p-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wide">Disparate Impact</div>
+<span class="material-symbols-outlined text-[16px] text-error">warning</span>
+</div>
+<div class="flex items-baseline space-x-2 mb-1">
+<span class="font-h2 text-h2 text-error">0.72</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 0.80 min</span>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-sm border-t border-outline-variant/30 pt-2">
+                                                    Protected Class: <span class="text-on-surface font-medium">Race</span>
+</div>
+</div>
+<!-- Metric Card 2: Passing -->
+<div class="bg-surface border border-outline-variant rounded-lg p-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-fixed-dim"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wide">Equal Opportunity</div>
+<span class="material-symbols-outlined text-[16px] text-primary-fixed-dim">check_circle</span>
+</div>
+<div class="flex items-baseline space-x-2 mb-1">
+<span class="font-h2 text-h2 text-on-surface">0.94</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 0.90 min</span>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-sm border-t border-outline-variant/30 pt-2">
+                                                    Protected Class: <span class="text-on-surface font-medium">Gender</span>
+</div>
+</div>
+<!-- Metric Card 3: Warning -->
+<div class="bg-surface border border-tertiary/30 rounded-lg p-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-tertiary"></div>
+<div class="flex justify-between items-start mb-sm">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wide">Predictive Parity</div>
+<span class="material-symbols-outlined text-[16px] text-tertiary">info</span>
+</div>
+<div class="flex items-baseline space-x-2 mb-1">
+<span class="font-h2 text-h2 text-on-surface">0.82</span>
+<span class="font-body-md text-body-md text-on-surface-variant">/ 0.85 target</span>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-sm border-t border-outline-variant/30 pt-2 flex items-center justify-between">
+<span>Monitoring closely</span>
+<button class="text-primary hover:underline">Re-calculate</button>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 3: Failing -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="py-3 px-4 font-medium">Fraud Detection CV</td>
+<td class="py-3 px-4"><span class="bg-surface-container-high px-2 py-0.5 rounded text-on-surface-variant font-code text-code text-[12px]">v2.1.0</span></td>
+<td class="py-3 px-4 text-on-surface-variant flex items-center">
+<span class="material-symbols-outlined text-[14px] mr-1.5">dns</span> AWS Sagemaker
+                                </td>
+<td class="py-3 px-4">
+<span class="text-on-surface-variant italic text-[12px]">None specified</span>
+</td>
+<td class="py-3 px-4">
+<svg class="text-error opacity-70" fill="none" height="20" viewbox="0 0 60 20" width="60">
+<path d="M0 10 L 15 12 L 30 18 L 45 15 L 60 19" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</td>
+<td class="py-3 px-4 text-on-surface-variant text-[13px]">1 week ago</td>
+<td class="py-3 px-4 text-right">
+<span class="inline-flex items-center px-2 py-1 rounded bg-error-container/20 text-error border border-error/30 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[12px] mr-1">cancel</span> Failing
+                                    </span>
+</td>
+<td class="py-3 px-4 text-on-surface-variant text-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Footer/Pagination -->
+<div class="bg-surface-container-lowest border-t border-outline-variant px-4 py-3 flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant">Showing 1 to 3 of 42 models</span>
+<div class="flex space-x-2">
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

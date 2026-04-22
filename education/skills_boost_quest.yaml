@@ -1,0 +1,86 @@
+quest_id: fairlens-enterprise-bias-detection
+title: "Enterprise AI Bias Detection with FairLens"
+description: >
+  Learn to detect, monitor, and remediate bias in production ML models
+  using the FairLens platform on Google Cloud. This quest covers the full
+  ML fairness lifecycle — from auditing training data to generating
+  regulatory compliance reports.
+skill_level: intermediate
+estimated_duration_hours: 4
+gcp_services:
+  - BigQuery
+  - Cloud Dataflow
+  - Pub/Sub
+  - Cloud Run
+  - Cloud Functions
+  - Gemini API
+  - Cloud KMS
+  - Cloud Monitoring
+sdg_alignment:
+  - "SDG 10: Reduced Inequalities"
+  - "SDG 16: Peace, Justice and Strong Institutions"
+badge:
+  name: "FairLens Certified Developer"
+  image_url: "gs://fairlens-assets/badges/developer-badge.png"
+
+labs:
+  - id: lab-01
+    title: "Getting Started with FairLens SDK"
+    duration_minutes: 30
+    objectives:
+      - Install and configure FairLens SDK
+      - Run your first bias audit on a sample dataset
+      - Interpret AuditReport metrics and identify violations
+    prerequisites:
+      - Python 3.9+
+      - Basic ML knowledge
+    notebook: "notebooks/01_quickstart.ipynb"
+
+  - id: lab-02
+    title: "Scanning Training Data for Structural Bias"
+    duration_minutes: 45
+    objectives:
+      - Deploy the FairLens Bias Scanner on Cloud Dataflow
+      - Identify class imbalance and proxy variable leakage
+      - Interpret the BiasProfile report in BigQuery
+    prerequisites:
+      - GCP project with Dataflow API enabled
+      - lab-01 completed
+    notebook: "notebooks/02_data_scanner.ipynb"
+
+  - id: lab-03
+    title: "Integrating the CI/CD Fairness Gate"
+    duration_minutes: 40
+    objectives:
+      - Add the FairLens gate to a GitHub Actions pipeline
+      - Configure a YAML policy file for your use case
+      - Test gate blocking behavior with a biased model
+    prerequisites:
+      - Docker installed
+      - GitHub repository access
+    notebook: "notebooks/03_cicd_gate.ipynb"
+
+  - id: lab-04
+    title: "Real-Time Fairness Monitoring with Vertex AI"
+    duration_minutes: 50
+    objectives:
+      - Deploy the streaming monitor on Dataflow
+      - Configure Cloud Monitoring alerts for equity score drift
+      - Simulate a fairness incident and observe alerting
+    prerequisites:
+      - GCP project with Pub/Sub and Dataflow
+      - lab-02 completed
+    notebook: "notebooks/04_realtime_monitor.ipynb"
+
+  - id: lab-05
+    title: "End-to-End: Mortgage Approval Bias Audit"
+    duration_minutes: 60
+    objectives:
+      - Complete audit of a loan approval model using HMDA benchmark data
+      - Generate an EEOC Adverse Impact Analysis compliance report
+      - Use Gemini remediation playbook to propose fixes
+      - Compare model fairness against industry benchmarks
+    prerequisites:
+      - All previous labs completed
+      - Gemini API key configured
+    notebook: "notebooks/05_e2e_mortgage.ipynb"

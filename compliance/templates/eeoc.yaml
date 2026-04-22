@@ -1,0 +1,129 @@
+report_title: "EEOC Adverse Impact Analysis — Automated Employment Decision Tool"
+framework: eeoc
+regulation: "Uniform Guidelines on Employee Selection Procedures (29 CFR Part 1607)"
+
+sections:
+  - heading: "1. Tool Description"
+    fields:
+      - id: model_id
+        label: "Model Identifier"
+        description: "Unique identifier of the automated decision tool"
+        required: true
+        source: "latest_audit.model_id"
+        data_path: "model_id"
+
+      - id: purpose
+        label: "Purpose"
+        description: "Description of how the tool is used in employment decisions"
+        required: true
+        source: "model_registry.description"
+        default: "Automated scoring of employment applications"
+
+      - id: analysis_date
+        label: "Analysis Date"
+        description: "Date this adverse impact analysis was conducted"
+        required: true
+        source: "report_date"
+        data_path: "report_date"
+
+      - id: protected_groups
+        label: "Protected Groups Analysed"
+        description: "List of protected characteristics examined under Title VII"
+        required: true
+        source: "latest_audit.protected_cols"
+        data_path: "latest_audit.protected_cols"
+        default: "See audit report"
+
+  - heading: "2. Selection Rate Analysis (4/5ths Rule)"
+    fields:
+      - id: disparate_impact_ratio
+        label: "Disparate Impact Ratio"
+        description: "Ratio of the selection rate for the group with the lowest rate to the group with the highest rate"
+        required: true
+        source: "latest_audit.metrics.disparate_impact_ratio"
+        data_path: "latest_audit.metrics.disparate_impact_ratio"
+
+      - id: four_fifths_threshold
+        label: "4/5ths Threshold"
+        description: "The EEOC threshold below which adverse impact is presumed"
+        required: true
+        source: "gate.policy.thresholds.disparate_impact_ratio"
+        default: "0.80"
+
+      - id: compliance_status
+        label: "Compliance Status"
+        description: "Whether the tool's selection rates comply with the 4/5ths rule"
+        required: true
+        source: "latest_audit.passed"
+        data_path: "latest_audit.passed"
+
+      - id: demographic_parity
+        label: "Demographic Parity Difference"
+        description: "Maximum difference in positive selection rates across protected groups"
+        required: true
+        source: "latest_audit.metrics.demographic_parity_difference"
+        data_path: "latest_audit.metrics.demographic_parity_difference"
+
+      - id: selection_rate_breakdown
+        label: "Selection Rate Per Protected Group"
+        description: "Individual selection rates for each protected group value"
+        required: true
+        source: "latest_audit.metrics"
+        data_path: "latest_audit.metrics"
+        default: "See detailed metric breakdown in audit report"
+
+  - heading: "3. Disparate Impact Analysis"
+    fields:
+      - id: equal_opportunity
+        label: "Equal Opportunity Difference"
+        description: "Difference in true positive rates across groups — measures whether qualified candidates are equally likely to be selected"
+        required: true
+        source: "latest_audit.metrics.equal_opportunity_difference"
+        data_path: "latest_audit.metrics.equal_opportunity_difference"
+
+      - id: equalized_odds
+        label: "Equalized Odds Difference"
+        description: "Maximum of TPR and FPR differences — measures error rate equality across groups"
+        required: true
+        source: "latest_audit.metrics.equalized_odds_difference"
+        data_path: "latest_audit.metrics.equalized_odds_difference"
+
+      - id: calibration
+        label: "Calibration Error"
+        description: "Maximum difference in positive predictive value across groups"
+        required: false
+        source: "latest_audit.metrics.calibration_error"
+        data_path: "latest_audit.metrics.calibration_error"
+
+  - heading: "4. Documentation of Validation Studies"
+    fields:
+      - id: total_audits
+        label: "Total Validation Audits Conducted"
+        description: "Number of fairness audits performed on this tool"
+        required: true
+        source: "audit_reports.count"
+        data_path: "latest_audit.total_audits"
+        default: "See audit history in FairLens console"
+
+      - id: total_incidents
+        label: "Total Bias Incidents Detected"
+        description: "Historical count of bias incidents for this tool"
+        required: true
+        source: "bias_incidents.count"
+        data_path: "incident_count"
+        default: "See incident log in FairLens console"
+
+      - id: remediation_history
+        label: "Remediation Actions Taken"
+        description: "Summary of mitigation measures applied to address detected bias"
+        required: true
+        source: "playbooks"
+        default: "See remediation playbook history in FairLens console"
+
+      - id: last_remediation
+        label: "Last Remediation Date"
+        description: "Date of the most recent bias mitigation action"
+        required: false
+        source: "latest_audit.last_remediation"
+        data_path: "latest_audit.last_remediation"
+        default: "N/A"

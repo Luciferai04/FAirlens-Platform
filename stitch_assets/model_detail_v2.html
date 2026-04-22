@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FairLens Model Detail - Fairness Scorecard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "tertiary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "primary-fixed-dim": "#61dbb4",
+                        "on-primary-container": "#003024",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-container": "#2a2a2a",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface": "#131313",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "on-secondary-container": "#b4b5b5",
+                        "primary-container": "#12a480",
+                        "inverse-primary": "#006c52",
+                        "on-tertiary": "#303030",
+                        "primary": "#61dbb4",
+                        "surface-dim": "#131313",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-surface-variant": "#bccac2",
+                        "surface-tint": "#61dbb4",
+                        "on-secondary-fixed-variant": "#454747",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-container": "#454747",
+                        "error": "#ffb4ab",
+                        "on-primary": "#00382a",
+                        "primary-fixed": "#7ff8cf",
+                        "on-secondary": "#2f3131",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-background": "#e5e2e1",
+                        "outline-variant": "#3d4a44",
+                        "tertiary": "#c8c6c5",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-container": "#929090",
+                        "surface-container": "#201f1f",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "background": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-fixed-variant": "#00513d",
+                        "on-surface": "#e5e2e1",
+                        "on-primary-fixed": "#002117",
+                        "secondary": "#c6c6c6",
+                        "outline": "#86948d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "container-max": "1200px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "h1": ["Inter"],
+                        "code": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h3": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "h2": ["Inter"]
+                    },
+                    "fontSize": {
+                        "h1": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "code": ["14px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar (Web) -->
+<nav class="hidden md:flex flex-col h-full py-6 space-y-2 bg-[#171717] fixed left-0 top-0 w-[240px] border-r border-[#2f2f2f] z-40">
+<div class="px-6 mb-8">
+<h2 class="text-white font-semibold text-h2 font-h2 mb-1">Governance Console</h2>
+<p class="text-[#b4b4b4] text-label-sm font-label-sm">Enterprise Tier</p>
+</div>
+<div class="flex-1 flex flex-col space-y-2 px-3">
+<a class="flex items-center px-3 py-2 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out rounded-r" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="text-sm font-medium font-['Inter']">Dashboard</span>
+</a>
+<a class="flex items-center px-3 py-2 text-white border-l-2 border-[#10a37f] bg-[#212121] hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out rounded-r" href="#">
+<span class="material-symbols-outlined mr-3 text-[#10a37f]">inventory_2</span>
+<span class="text-sm font-medium font-['Inter']">Model Registry</span>
+</a>
+<a class="flex items-center px-3 py-2 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out rounded-r" href="#">
+<span class="material-symbols-outlined mr-3">report_problem</span>
+<span class="text-sm font-medium font-['Inter']">Incidents</span>
+</a>
+<a class="flex items-center px-3 py-2 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out rounded-r" href="#">
+<span class="material-symbols-outlined mr-3">verified_user</span>
+<span class="text-sm font-medium font-['Inter']">Compliance</span>
+</a>
+<a class="flex items-center px-3 py-2 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out rounded-r" href="#">
+<span class="material-symbols-outlined mr-3">analytics</span>
+<span class="text-sm font-medium font-['Inter']">Benchmarks</span>
+</a>
+<a class="flex items-center px-3 py-2 text-[#b4b4b4] border-l-2 border-transparent hover:bg-[#212121] hover:text-white transition-all duration-200 ease-in-out rounded-r mt-auto" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="text-sm font-medium font-['Inter']">Settings</span>
+</a>
+</div>
+<div class="mt-auto px-6 pt-6 border-t border-[#2f2f2f]">
+<img alt="Organization Logo" class="w-10 h-10 rounded-full bg-[#212121]" data-alt="Minimalist abstract geometric shape representing a corporate logo in grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdM2sXBlsyxvPTXOxBlE4ORZOERp6Cp7fZ9UZ89If5lQg6pLKv8trmL-8KfFgDXmaWZQzsYNXKIPl8t6rtd6PzXX4cqWJiGgPyNs3JGVH03S71rD7HGeZPEZYkyNvvU3FECycZoUin10QXMSowN2rkyScE5C3uuHoYNbUk7avtE46tApgJ2AEGnFbToj2Rjfv-b9ZH3nqaImCgFVBfJUjuhKHgPrD90-xykLVtPTPmPkCfjSiNr5prY6uTzsX5X7H_1hM3PKujGPc5"/>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-[240px]">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-6 w-full sticky top-0 z-50 bg-[#0d0d0d] h-16 border-b border-[#2f2f2f]">
+<div class="flex items-center gap-4 md:hidden">
+<button class="text-[#b4b4b4] hover:text-white transition-colors duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="text-lg font-bold text-white tracking-wide font-['Inter'] antialiased">FairLens</span>
+</div>
+<div class="hidden md:flex items-center">
+<span class="text-lg font-bold text-white tracking-wide font-['Inter'] antialiased">FairLens</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-[#b4b4b4]">
+<button class="hover:text-white transition-colors duration-200 cursor-pointer active:scale-95 flex items-center justify-center w-8 h-8 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:text-white transition-colors duration-200 cursor-pointer active:scale-95 flex items-center justify-center w-8 h-8 rounded-full">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-[#2f2f2f]">
+<span class="text-sm text-[#b4b4b4] hidden sm:block">Google SSO</span>
+<img alt="User Avatar" class="w-8 h-8 rounded-full cursor-pointer border border-[#2f2f2f]" data-alt="Professional headshot of user, dark background, corporate lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ9wRTvN-6tJaMc1IDRxNzfsfhB4OPoazF26piRwSGUwJCTStK0yIPc9zVD56-97oHzVhjKunqGlWWkm72iSExpp7GLOUA7xKLmud-pNr4DRMzsMgVuDGKulbYHSTefsLakvOtJdz1BZiV78c3SdfeZUTMumISXprvjVTuxzCDy7zT2DNGt_YYnoYJEbMKRzADx42F7SE_kouFDycXdWQhfzPk59Ukl6MfGD_eg_R4GI39I4jATiSUmJMZdHwlXyrZXZva2QPU1wTF"/>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 p-6 md:p-lg lg:p-xl max-w-container-max mx-auto w-full">
+<!-- Breadcrumb & Header -->
+<div class="mb-lg">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-[#b4b4b4] mb-2">
+<a class="hover:text-white transition-colors" href="#">Model Registry</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-white">CreditRisk-v2.4-XGBoost</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<h1 class="text-h1 font-h1 text-white">Credit Risk Predictor V2.4</h1>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-[#2f2f2f] text-white rounded text-sm font-medium hover:bg-[#212121] transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                            Export Report
+                        </button>
+<button class="px-4 py-2 bg-[#10a37f] text-white rounded text-sm font-medium hover:bg-[#0e906f] transition-colors">
+                            Configure Thresholds
+                        </button>
+</div>
+</div>
+</div>
+<!-- Model Metadata Card -->
+<div class="bg-[#171717] border border-[#2f2f2f] rounded-lg p-6 mb-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider mb-1">Model Status</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#10a37f]"></span>
+<span class="text-body-lg font-body-lg text-white">In Production</span>
+</div>
+</div>
+<div class="flex flex-col border-l-0 md:border-l border-[#2f2f2f] md:pl-6">
+<span class="text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider mb-1">Overall Equity Score</span>
+<div class="flex items-end gap-2">
+<span class="text-h2 font-h2 text-white">92.4</span>
+<span class="text-body-md font-body-md text-[#10a37f] mb-1 flex items-center">
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+                                1.2%
+                            </span>
+</div>
+</div>
+<div class="flex flex-col border-l-0 lg:border-l border-[#2f2f2f] lg:pl-6">
+<span class="text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider mb-1">Protected Class</span>
+<span class="text-body-lg font-body-lg text-white">Age, Gender, Ethnicity</span>
+</div>
+<div class="flex flex-col border-l-0 md:border-l border-[#2f2f2f] md:pl-6">
+<span class="text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider mb-1">Last Evaluation</span>
+<span class="text-body-lg font-body-lg text-white">Oct 24, 2023 - 14:30 UTC</span>
+</div>
+</div>
+</div>
+<!-- Main Dash Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-lg mb-lg">
+<!-- Radar Chart Card -->
+<div class="bg-[#171717] border border-[#2f2f2f] rounded-lg p-6 flex flex-col min-h-[400px]">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-h3 font-h3 text-white mb-1">Fairness Metrics Profile</h3>
+<p class="text-body-md font-body-md text-[#b4b4b4]">Current values against defined compliance thresholds.</p>
+</div>
+<button class="text-[#b4b4b4] hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex-1 relative w-full flex items-center justify-center">
+<!-- Abstract representation of Radar Chart -->
+<div class="w-full max-w-[300px] aspect-square relative">
+<!-- Background Web -->
+<div class="absolute inset-0 border border-[#2f2f2f] rounded-full opacity-50"></div>
+<div class="absolute inset-[15%] border border-[#2f2f2f] rounded-full opacity-50"></div>
+<div class="absolute inset-[30%] border border-[#2f2f2f] rounded-full opacity-50"></div>
+<div class="absolute inset-[45%] border border-[#2f2f2f] rounded-full opacity-50"></div>
+<!-- Axes -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-full h-[1px] bg-[#2f2f2f] absolute transform rotate-0"></div>
+<div class="w-full h-[1px] bg-[#2f2f2f] absolute transform rotate-45"></div>
+<div class="w-full h-[1px] bg-[#2f2f2f] absolute transform rotate-90"></div>
+<div class="w-full h-[1px] bg-[#2f2f2f] absolute transform rotate-[135deg]"></div>
+</div>
+<!-- Data Polygon (Current) -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<polygon fill="rgba(16, 163, 127, 0.2)" points="50,15 75,30 85,50 65,80 50,85 30,70 15,50 35,25" stroke="#10a37f" stroke-width="1.5"></polygon>
+</svg>
+<!-- Threshold Polygon -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<polygon fill="none" points="50,20 80,20 80,50 80,80 50,80 20,80 20,50 20,20" stroke="#b4b4b4" stroke-dasharray="2,2" stroke-width="1"></polygon>
+</svg>
+<!-- Labels (Positioned absolutely around the chart) -->
+<span class="absolute -top-6 left-1/2 transform -translate-x-1/2 text-[10px] text-[#b4b4b4] whitespace-nowrap">Demographic Parity</span>
+<span class="absolute top-[10%] -right-8 text-[10px] text-[#b4b4b4] whitespace-nowrap">Equalized Odds</span>
+<span class="absolute top-1/2 -right-12 transform -translate-y-1/2 text-[10px] text-[#b4b4b4] whitespace-nowrap">Disparate Impact</span>
+<span class="absolute bottom-[10%] -right-8 text-[10px] text-[#b4b4b4] whitespace-nowrap">Calibration Error</span>
+<span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-[10px] text-[#b4b4b4] whitespace-nowrap">Theil Index</span>
+<span class="absolute bottom-[10%] -left-8 text-[10px] text-[#b4b4b4] whitespace-nowrap">Statistical Parity</span>
+<span class="absolute top-1/2 -left-12 transform -translate-y-1/2 text-[10px] text-[#b4b4b4] whitespace-nowrap">Average Odds</span>
+<span class="absolute top-[10%] -left-10 text-[10px] text-[#b4b4b4] whitespace-nowrap">Equal Opportunity</span>
+</div>
+</div>
+<div class="mt-6 flex justify-center gap-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 bg-[#10a37f] bg-opacity-20 border border-[#10a37f]"></span>
+<span class="text-label-sm font-label-sm text-[#b4b4b4]">Current Model</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-[1px] bg-[#b4b4b4] border-t border-dashed border-[#b4b4b4]"></span>
+<span class="text-label-sm font-label-sm text-[#b4b4b4]">Thresholds</span>
+</div>
+</div>
+</div>
+<!-- Time-Series Line Chart Card -->
+<div class="bg-[#171717] border border-[#2f2f2f] rounded-lg p-6 flex flex-col min-h-[400px]">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-h3 font-h3 text-white mb-1">Equity Score Timeline</h3>
+<p class="text-body-md font-body-md text-[#b4b4b4]">90-day rolling performance with detected anomalies.</p>
+</div>
+<select class="bg-[#212121] border border-[#2f2f2f] text-white text-sm rounded px-3 py-1 focus:ring-1 focus:ring-[#10a37f] focus:border-[#10a37f] outline-none">
+<option>Last 90 Days</option>
+<option>Last 30 Days</option>
+<option>Year to Date</option>
+</select>
+</div>
+<div class="flex-1 relative w-full mt-4 flex flex-col">
+<!-- Y-Axis Labels -->
+<div class="absolute left-0 top-0 bottom-6 w-8 flex flex-col justify-between text-[10px] text-[#b4b4b4] text-right pr-2">
+<span>100</span>
+<span>95</span>
+<span>90</span>
+<span>85</span>
+<span>80</span>
+</div>
+<!-- Chart Area -->
+<div class="ml-8 flex-1 relative border-b border-l border-[#2f2f2f]">
+<!-- Grid Lines -->
+<div class="absolute w-full h-[1px] bg-[#2f2f2f] top-[25%] opacity-50"></div>
+<div class="absolute w-full h-[1px] bg-[#2f2f2f] top-[50%] opacity-50"></div>
+<div class="absolute w-full h-[1px] bg-[#2f2f2f] top-[75%] opacity-50"></div>
+<!-- Threshold Line -->
+<div class="absolute w-full h-[1px] bg-[#ffb4ab] top-[60%] border-t border-dashed border-[#ffb4ab] opacity-50"></div>
+<!-- Abstract SVG Line Chart -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Gradient Fill -->
+<defs>
+<lineargradient id="line-gradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#10a37f" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#10a37f" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,40 L10,38 L20,45 L30,35 L40,42 L50,55 L60,30 L70,35 L80,25 L90,28 L100,20 L100,100 L0,100 Z" fill="url(#line-gradient)"></path>
+<polyline fill="none" points="0,40 10,38 20,45 30,35 40,42 50,55 60,30 70,35 80,25 90,28 100,20" stroke="#10a37f" stroke-width="2"></polyline>
+<!-- Anomaly Markers -->
+<circle cx="50" cy="55" fill="#ffb4ab" r="3"></circle>
+<circle cx="20" cy="45" fill="#ffb4ab" r="3"></circle>
+</svg>
+<!-- Custom Tooltip Example (Hidden by default, shown here for design completion) -->
+<div class="absolute left-[50%] top-[35%] transform -translate-x-1/2 bg-[#212121] border border-[#2f2f2f] p-2 rounded shadow-lg z-10 hidden md:block">
+<div class="text-[10px] text-[#b4b4b4] mb-1">Oct 12, 2023</div>
+<div class="text-sm text-white font-medium">Score: 88.5</div>
+<div class="text-[10px] text-[#ffb4ab] mt-1">Anomaly Detected</div>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="ml-8 h-6 flex justify-between items-end text-[10px] text-[#b4b4b4]">
+<span>Jul</span>
+<span>Aug</span>
+<span>Sep</span>
+<span>Oct</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SHAP Feature Attribution Heatmap -->
+<div class="bg-[#171717] border border-[#2f2f2f] rounded-lg p-6">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-h3 font-h3 text-white mb-1">Feature Impact Analysis</h3>
+<p class="text-body-md font-body-md text-[#b4b4b4]">SHAP value distribution affecting bias across protected cohorts.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-sm font-label-sm text-[#b4b4b4]">Low Impact</span>
+<div class="w-24 h-2 rounded bg-gradient-to-r from-[#131313] via-[#3d4a44] to-[#10a37f]"></div>
+<span class="text-label-sm font-label-sm text-[#b4b4b4]">High Impact</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[600px]">
+<thead>
+<tr>
+<th class="py-3 px-4 text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider border-b border-[#2f2f2f] w-1/4">Feature Name</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider border-b border-[#2f2f2f] text-center">Global Importance</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider border-b border-[#2f2f2f] text-center">Age Bias Impact</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider border-b border-[#2f2f2f] text-center">Gender Bias Impact</th>
+<th class="py-3 px-4 text-label-sm font-label-sm text-[#b4b4b4] uppercase tracking-wider border-b border-[#2f2f2f] text-center">Ethnicity Bias Impact</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="hover:bg-[#212121] transition-colors border-b border-[#2f2f2f]">
+<td class="py-3 px-4 text-white font-code">Credit History Length</td>
+<td class="py-3 px-4">
+<div class="w-full bg-[#131313] rounded-sm h-1.5"><div class="bg-[#10a37f] h-1.5 rounded-sm" style="width: 85%"></div></div>
+</td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#3d4a44] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#10a37f] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+</tr>
+<tr class="hover:bg-[#212121] transition-colors border-b border-[#2f2f2f]">
+<td class="py-3 px-4 text-white font-code">Income Level</td>
+<td class="py-3 px-4">
+<div class="w-full bg-[#131313] rounded-sm h-1.5"><div class="bg-[#10a37f] h-1.5 rounded-sm opacity-80" style="width: 70%"></div></div>
+</td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#10a37f] opacity-60 border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#10a37f] border border-[#2f2f2f]"></span></td>
+</tr>
+<tr class="hover:bg-[#212121] transition-colors border-b border-[#2f2f2f]">
+<td class="py-3 px-4 text-white font-code">Employment Status</td>
+<td class="py-3 px-4">
+<div class="w-full bg-[#131313] rounded-sm h-1.5"><div class="bg-[#10a37f] h-1.5 rounded-sm opacity-60" style="width: 55%"></div></div>
+</td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#10a37f] opacity-80 border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#3d4a44] border border-[#2f2f2f]"></span></td>
+</tr>
+<tr class="hover:bg-[#212121] transition-colors border-b border-[#2f2f2f]">
+<td class="py-3 px-4 text-white font-code flex items-center gap-2">
+                                    Zip Code
+                                    <span class="material-symbols-outlined text-[14px] text-[#ffb4ab]" title="High Risk Feature">warning</span>
+</td>
+<td class="py-3 px-4">
+<div class="w-full bg-[#131313] rounded-sm h-1.5"><div class="bg-[#10a37f] h-1.5 rounded-sm opacity-40" style="width: 40%"></div></div>
+</td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#3d4a44] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#10a37f] border border-[#2f2f2f]"></span></td>
+</tr>
+<tr class="hover:bg-[#212121] transition-colors">
+<td class="py-3 px-4 text-white font-code">Debt-to-Income Ratio</td>
+<td class="py-3 px-4">
+<div class="w-full bg-[#131313] rounded-sm h-1.5"><div class="bg-[#10a37f] h-1.5 rounded-sm opacity-30" style="width: 25%"></div></div>
+</td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+<td class="py-3 px-4 text-center"><span class="inline-block w-6 h-6 rounded bg-[#2a2a2a] border border-[#2f2f2f]"></span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>
