@@ -140,8 +140,25 @@ def seed_db():
 
     # 5. Playbooks
     STRATEGIES = [
-        {"title": "Reweighting Training Data", "type": "Data Intervention", "effort": "Medium", "steps": ["Step 1", "Step 2"]},
-        {"title": "Adversarial Debiasing", "type": "Model Architecture", "effort": "High", "steps": ["Step 1", "Step 2"]}
+        {
+            "title": "Use D8 Synthetic Data Engine", 
+            "type": "Data Intervention", 
+            "effort": "Low", 
+            "steps": [
+                "Run fairlens.debias() to trigger D8",
+                "Generate synthetic samples with Gaussian noise for Hispanic & Black applicants",
+                "Balance representation gap mathematically"
+            ]
+        },
+        {
+            "title": "Dynamic Threshold Calibration", 
+            "type": "Post-Processing", 
+            "effort": "Medium", 
+            "steps": [
+                "Calculate group-specific thresholds for Equal Opportunity",
+                "Implement fairlens.calibrate_thresholds() in the inference pipeline"
+            ]
+        }
     ]
     c.execute("INSERT OR REPLACE INTO playbooks VALUES (?,?,?,?,?,?)",
               ("pb-INC-001", "INC-001", json.dumps(STRATEGIES), 0, now.isoformat() + "Z", None))
