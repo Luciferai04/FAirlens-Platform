@@ -7,19 +7,19 @@ import { SkeletonRow, ErrorBanner } from "../components/Skeleton";
 const FALLBACK_MODELS = [
   { model_id: "loan-approval-v2", name: "Loan Origination v4.2", version: "v4.2.1", provider: "sklearn",
     sensitive_cols: ["race", "gender"], equity_score: 0.72, passed: false, violations_count: 2,
-    last_audited: "2024-10-24T14:30:00Z", triggered_by: "scheduled" },
+    last_audited: "2024-10-24T14:30:00Z", triggered_by: "scheduled", ebi_score: 54, risk_tier: "AMBER" },
   { model_id: "resume-screen-v3", name: "Resume Screening", version: "v3.1.0", provider: "Vertex AI",
     sensitive_cols: ["age", "gender"], equity_score: 0.92, passed: true, violations_count: 0,
-    last_audited: "2024-10-24T12:00:00Z", triggered_by: "ci_gate" },
+    last_audited: "2024-10-24T12:00:00Z", triggered_by: "ci_gate", ebi_score: 88, risk_tier: "GREEN" },
   { model_id: "icu-triage-v1", name: "ICU Triage Priority", version: "v1.0.3", provider: "TensorFlow",
     sensitive_cols: ["race", "age", "insurance_type"], equity_score: 0.58, passed: false, violations_count: 4,
-    last_audited: "2024-10-23T09:15:00Z", triggered_by: "manual" },
+    last_audited: "2024-10-23T09:15:00Z", triggered_by: "manual", ebi_score: 42, risk_tier: "CRITICAL" },
   { model_id: "credit-scoring-v5", name: "Credit Scorer Baseline", version: "v5.0.0", provider: "Vertex AI",
     sensitive_cols: ["age", "income_bracket"], equity_score: 0.88, passed: true, violations_count: 0,
-    last_audited: "2024-10-22T16:45:00Z", triggered_by: "scheduled" },
+    last_audited: "2024-10-22T16:45:00Z", triggered_by: "scheduled", ebi_score: 91, risk_tier: "GREEN" },
   { model_id: "content-rec-v2", name: "Content Feed Ranking", version: "v2.1.0", provider: "AWS Sagemaker",
     sensitive_cols: ["gender", "region"], equity_score: 0.79, passed: false, violations_count: 1,
-    last_audited: "2024-10-17T08:30:00Z", triggered_by: "ci_gate" },
+    last_audited: "2024-10-17T08:30:00Z", triggered_by: "ci_gate", ebi_score: 76, risk_tier: "AMBER" },
 ];
 
 const STATUS_LABEL = (m: any) => {

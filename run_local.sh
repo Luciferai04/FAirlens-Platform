@@ -3,10 +3,11 @@
 
 echo "🚀 Starting FairLens in Local Mode (No GCP required)..."
 
-# Kill anything on 8080 or 5173 to prevent address in use errors
-echo "🧹 Clearing ports..."
-lsof -ti:8080 | xargs kill -9 2>/dev/null
-lsof -ti:5173 | xargs kill -9 2>/dev/null
+# Kill anything on 8080, 8000, or 5173 to prevent address in use errors
+echo "🧹 Clearing ports (8080, 8000, 5173)..."
+lsof -ti:8080,8000,5173 | xargs kill -9 2>/dev/null
+pkill -f "uvicorn main:app" 2>/dev/null
+sleep 1
 
 # Ensure database is seeded
 echo "📦 Checking local database..."
@@ -32,7 +33,7 @@ FRONTEND_PID=$!
 
 echo ""
 echo "✅ FairLens is running!"
-echo "👉 Backend API: http://localhost:8000"
+echo "👉 Backend API: http://localhost:8080"
 echo "👉 Frontend UI: http://localhost:5173"
 echo "Press Ctrl+C to stop both servers."
 
