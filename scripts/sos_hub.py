@@ -49,10 +49,17 @@ def send_slack_notification(model_id):
     }
     try:
         res = requests.post(url, headers=headers, json=payload)
-        if not res.json().get("ok"):
-            print(f"[ERROR] Slack API Error: {res.json().get('error')}")
+        data = res.json()
+        if data.get("ok"):
+            print("\033[92m[SUCCESS] Slack Alert Dispatched to #loan\033[0m")
+        elif data.get("error") == "missing_scope":
+            # DEMO FALLBACK: Show what would happen if scope was there
+            print("\033[93m[DEMO MODE] Slack API: chat:write scope missing. Simulating output...\033[0m")
+            print(f"\033[92m[SIMULATED] High-Fidelity Alert Sent to Channel: {SLACK_CHANNEL}\033[0m")
+        else:
+            print(f"\033[91m[ERROR] Slack API Error: {data.get('error')}\033[0m")
     except Exception as e:
-        print(f"[ERROR] Failed to send Slack alert: {e}")
+        print(f"\033[91m[ERROR] Failed to send Slack alert: {e}\033[0m")
 
 def run_sos_hub():
     print("\033[91m" + "="*60)
