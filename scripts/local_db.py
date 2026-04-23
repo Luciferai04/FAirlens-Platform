@@ -15,6 +15,8 @@ def init_db():
     CREATE TABLE IF NOT EXISTS audit_reports (
         report_id TEXT PRIMARY KEY,
         model_id TEXT NOT NULL,
+        name TEXT,
+        version TEXT,
         created_at TEXT NOT NULL,
         protected_cols TEXT,      -- JSON array
         metrics TEXT,             -- JSON object

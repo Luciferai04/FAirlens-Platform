@@ -49,6 +49,18 @@ export default function Dashboard() {
   const { data: apiModels, isLoading: modelsLoading, isError: modelsError } = useModels();
   const { data: apiIncidents, isLoading: incidentsLoading, isError: incidentsError } = useIncidents();
 
+  // SOS NOTIFICATION LOGIC
+  const [showSOS, setShowSOS] = useState(false);
+  const criticalIncident = apiIncidents?.find((inc: any) => inc.severity === 'Critical' && inc.status === 'Open');
+
+  useEffect(() => {
+    if (criticalIncident) {
+      // Simulate "Real-Time" arrival for the demo
+      const timer = setTimeout(() => setShowSOS(true), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [criticalIncident]);
+
   // Use API data, fall back to hardcoded
   const models = apiModels ?? FALLBACK_MODELS as any[];
   const incidents = apiIncidents ?? FALLBACK_INCIDENTS as any[];
@@ -76,7 +88,43 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex-1 p-lg overflow-y-auto">
+    <div className="flex-1 p-lg overflow-y-auto relative">
+      {/* SOS Slack-style Notification */}
+      {showSOS && criticalIncident && (
+        <div className="fixed bottom-8 right-8 z-[100] animate-in slide-in-from-right-10 duration-500">
+          <div className="bg-[#1a1d21] border border-[#d13438] rounded-lg shadow-2xl w-[380px] overflow-hidden">
+            <div className="bg-[#d13438] px-3 py-1 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-white font-bold text-[12px]">
+                <span className="material-symbols-outlined text-[16px]">notifications_active</span>
+                SOS EMERGENCY ALERT
+              </div>
+              <button onClick={() => setShowSOS(false)} className="text-white hover:opacity-70">
+                <span className="material-symbols-outlined text-[16px]">close</span>
+              </button>
+            </div>
+            <div className="p-4 flex gap-3">
+              <div className="w-10 h-10 rounded bg-[#d13438]/20 flex items-center justify-center shrink-0">
+                <span className="material-symbols-outlined text-[#d13438]">warning</span>
+              </div>
+              <div>
+                <h4 className="text-white font-bold text-[14px]">Pipeline Blocked: {criticalIncident.model_name}</h4>
+                <p className="text-[#ababad] text-[13px] mt-1">
+                  Critical bias detected in production build. Deployment halted automatically.
+                </p>
+                <div className="mt-3 flex gap-2">
+                  <button 
+                    onClick={() => { setShowSOS(false); navigate("/incidents"); }}
+                    className="bg-[#d13438] text-white text-[12px] font-bold px-3 py-1.5 rounded hover:bg-[#a4262c] transition-colors"
+                  >
+                    INVESTIGATE NOW
+                  </button>
+                  <button className="text-[#ababad] text-[12px] px-3 py-1.5 hover:text-white" onClick={() => setShowSOS(false)}>Ignore</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="max-w-[1400px] mx-auto w-full">
         {/* Error Banner */}
         {(modelsError || incidentsError) && (

@@ -274,57 +274,69 @@ export default function Incidents() {
 
         <div className="flex-1 overflow-y-auto p-lg flex flex-col gap-lg">
           {/* Analysis */}
-          <div className="bg-surface-container border border-surface-container-high rounded-lg p-md">
-            <p className="text-body-md text-on-surface mb-2">
-              <strong className="text-white">Analysis:</strong>{" "}
+          <div className="bg-primary-container/10 border border-primary-container/20 rounded-xl p-lg relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-2 opacity-20">
+              <span className="material-symbols-outlined text-[48px]">psychology</span>
+            </div>
+            <h3 className="font-h3 text-[14px] text-primary-container mb-2 flex items-center gap-2">
+              <span className="material-symbols-outlined text-[18px]">verified_user</span>
+              AI ROOT CAUSE ANALYSIS
+            </h3>
+            <p className="text-body-md text-on-surface leading-relaxed">
               {activePlaybook?.root_cause_analysis ??
                 "The model exhibits a critical disparity across protected demographic attributes."}
-            </p>
-            <p className="text-body-md text-on-surface-variant">
-              Gemini has synthesized {strategies.length} recommended remediation strategies.
             </p>
           </div>
 
           {/* Strategies */}
           <div className="flex flex-col gap-md">
-            <h3 className="font-h3 text-h3 text-on-surface text-[16px]">Proposed Strategies</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-h3 text-h3 text-on-surface text-[16px]">Remediation Strategies</h3>
+              <span className="text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-full">
+                {strategies.length} options
+              </span>
+            </div>
             {strategies.map((s: any, i: number) => {
               const isRecommended = i === 0;
-              const isExpanded = expandedStrategy === i;
+              // AUTO-EXPAND the first strategy, or use manual toggle
+              const isExpanded = expandedStrategy === null ? isRecommended : expandedStrategy === i;
+              
               return (
                 <div
                   key={i}
                   className={`bg-surface-container-low border rounded-xl p-md relative overflow-hidden cursor-pointer transition-all ${
-                    isRecommended ? "border-primary-container border-opacity-50" : "border-surface-container-high"
+                    isRecommended ? "border-primary-container/50 shadow-[0_0_15px_rgba(16,163,127,0.1)]" : "border-surface-container-high"
                   } ${i === 2 ? "opacity-75" : ""}`}
-                  onClick={() => setExpandedStrategy(isExpanded ? null : i)}
+                  onClick={() => setExpandedStrategy(isExpanded && expandedStrategy !== null ? -1 : i)}
                 >
                   {isRecommended && (
-                    <div className="absolute top-0 right-0 bg-primary-container text-on-primary-container font-label-sm text-label-sm px-2 py-1 rounded-bl-lg font-semibold">
-                      Recommended
+                    <div className="absolute top-0 right-0 bg-primary-container text-on-primary-container font-label-sm text-label-sm px-3 py-1 rounded-bl-lg font-bold tracking-tight">
+                      RECOMMENDED
                     </div>
                   )}
                   <div className="flex items-start gap-3 mb-3">
                     <span className={`material-symbols-outlined ${isRecommended ? "text-primary-container" : "text-on-surface-variant"}`}>
-                      {i === 0 ? "tune" : i === 1 ? "model_training" : "block"}
+                      {i === 0 ? "tune" : i === 1 ? "model_training" : "verified_user"}
                     </span>
                     <div>
                       <h4 className={`font-h3 text-[15px] ${isRecommended ? "text-white" : "text-on-surface"}`}>{s.title}</h4>
                       <p className="font-label-sm text-label-sm text-on-surface-variant mt-0.5">
-                        Effort: {s.effort} · Type: {s.type}
+                        Effort: <span className="text-on-surface">{s.effort}</span> · Type: <span className="text-on-surface">{s.type}</span>
                       </p>
                     </div>
                   </div>
                   {/* Expanded steps */}
                   {isExpanded && s.steps && (
-                    <ul className="mt-3 space-y-2 border-t border-[#2f2f2f] pt-3">
+                    <div className="mt-4 space-y-3 border-t border-surface-container-high pt-4 animate-in fade-in slide-in-from-top-2 duration-300">
                       {s.steps.map((step: string, si: number) => (
-                        <li key={si} className="flex gap-2 text-body-md text-on-surface-variant">
-                          <span className="text-[#10a37f] font-medium shrink-0">{si + 1}.</span>
-                          {step}
-                        </li>
+                        <div key={si} className="flex gap-3 text-body-md text-on-surface">
+                          <div className="w-5 h-5 rounded-full bg-primary-container/20 text-primary-container text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                            {si + 1}
+                          </div>
+                          <span className="leading-snug">{step}</span>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   )}
                   <label className="flex items-center gap-2 cursor-pointer group mt-2">
                     <input

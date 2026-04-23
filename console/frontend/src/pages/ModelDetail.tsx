@@ -75,7 +75,7 @@ export default function ModelDetail() {
           </div>
           <div className="flex gap-sm">
             <button
-              onClick={() => window.open(`${import.meta.env.VITE_API_URL ?? "/api"}/v1/reports/compliance?model_id=${id}&framework=eeoc`, "_blank")}
+              onClick={() => window.open(`${import.meta.env.VITE_API_URL ?? "/api"}/v1/reports/generate?model_id=${id}&framework=eeoc`, "_blank")}
               className="px-4 py-2 border border-[#2f2f2f] rounded-lg text-[#b4b4b4] hover:bg-[#212121] hover:text-white transition-colors flex items-center gap-2 text-body-md"
             >
               <span className="material-symbols-outlined text-[18px]">download</span> Export Report
@@ -90,7 +90,7 @@ export default function ModelDetail() {
         {audit && !audit.passed && (
           <div className="bg-error-container/20 border border-error-container text-on-error-container px-4 py-3 rounded-lg flex items-center gap-3 mb-lg">
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>error</span>
-            <span className="text-body-md">FAILING — {audit.violations.length} violation(s) detected across protected attributes</span>
+            <span className="text-body-md">FAILING — {audit.violations?.length ?? 0} violation(s) detected across protected attributes</span>
             <button onClick={() => navigate("/incidents")} className="ml-auto text-label-sm underline hover:text-white transition-colors">
               View Incidents
             </button>

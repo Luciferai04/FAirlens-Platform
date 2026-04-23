@@ -43,9 +43,19 @@ class AuditReport:
         """True if no violations were found."""
         return not self.flag_violation()
 
-    def flag_violation(self) -> bool:
-        """Returns True if any metric exceeds its configured threshold."""
-        return len(self.violations) > 0
+    def flag_violation(self, threshold: float = 0.1) -> bool:
+        """Returns True if any metric exceeds the threshold."""
+        for m in self.metrics.values():
+            for val in m.values():
+                if abs(val) > threshold:
+                    # TRIGGER SOS SIGNAL (D12: REAL-TIME ALERTS)
+                    try:
+                        with open(".sos_signal", "w") as f:
+                            f.write(self.model_id)
+                    except:
+                        pass
+                    return True
+        return False
 
     def to_dict(self) -> dict:
         """Convert report to a plain dictionary."""

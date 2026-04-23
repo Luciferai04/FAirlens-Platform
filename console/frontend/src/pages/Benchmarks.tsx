@@ -149,7 +149,10 @@ export default function Benchmarks() {
                    <p className="text-sm text-[#b4b4b4]">Export certified industry comparison for ESG reporting.</p>
                 </div>
               </div>
-              <button className="w-full py-3 bg-white text-black font-bold rounded-lg hover:bg-[#e2e8f0] transition-colors">
+              <button 
+                onClick={() => window.open(`${import.meta.env.VITE_API_URL ?? "/api"}/v1/reports/generate?model_id=global_benchmarks&framework=esg`, "_blank")}
+                className="w-full py-3 bg-white text-black font-bold rounded-lg hover:bg-[#e2e8f0] transition-colors"
+              >
                 Generate ESG Fairness Report
               </button>
            </div>

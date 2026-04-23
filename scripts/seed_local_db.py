@@ -75,7 +75,6 @@ def seed_db():
     conn = init_db()
     c = conn.cursor()
     now = datetime.utcnow()
-
     # 1. Audit Reports
     for m in MODELS:
         base = m["equity_score"]
@@ -91,10 +90,12 @@ def seed_db():
         }
 
         c.execute("""
-            INSERT OR REPLACE INTO audit_reports VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+            INSERT OR REPLACE INTO audit_reports VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
         """, (
             f"rpt-{m['model_id']}-latest",
             m["model_id"],
+            m["name"],
+            m["version"],
             now.isoformat() + "Z",
             json.dumps(m["sensitive_cols"]),
             json.dumps(metrics),
@@ -118,7 +119,15 @@ def seed_db():
         c.execute("INSERT OR REPLACE INTO bias_incidents (incident_id, model_id, model_name, model_category, detected_at, metric_name, sub_metric, current_value, threshold, severity, status, sensitive_col) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", 
                   (inc[0], inc[1], inc[2], inc[3], (now - timedelta(days=2)).isoformat() + "Z", inc[4], inc[5], inc[6], inc[7], inc[8], inc[9], inc[10]))
 
-    # 3. SHAP Data
+    # 3. Compliance Reports
+    COMPLIANCE = [
+        ("COMP-101", "model-loan-001", "Loan Approval", "EEOC (US)", (now - timedelta(days=5)).isoformat() + "Z", 1, "sha256-8f3a...d9e1"),
+        ("COMP-102", "model-icu-003", "ICU Triage", "EU AI Act", (now - timedelta(days=12)).isoformat() + "Z", 1, "sha256-4b2e...a1f0"),
+    ]
+    for comp in COMPLIANCE:
+        c.execute("INSERT OR REPLACE INTO compliance_reports (report_id, model_id, model_name, framework, generated_at, kms_signed, sha256_hash) VALUES (?,?,?,?,?,?,?)", comp)
+
+    # 4. SHAP Data
     SHAP_RECORDS = [
         ("model-loan-001", "race", "White", "zip_code", 0.12, 0.31),
         ("model-loan-001", "race", "Black", "zip_code", 0.43, 0.31),
@@ -129,7 +138,7 @@ def seed_db():
         c.execute("INSERT OR REPLACE INTO shap_attributions VALUES (?,?,?,?,?,?,?,?)",
                   (str(uuid.uuid4()), s[0], s[1], s[2], s[3], s[4], s[5], now.isoformat() + "Z"))
 
-    # 4. Playbooks
+    # 5. Playbooks
     STRATEGIES = [
         {"title": "Reweighting Training Data", "type": "Data Intervention", "effort": "Medium", "steps": ["Step 1", "Step 2"]},
         {"title": "Adversarial Debiasing", "type": "Model Architecture", "effort": "High", "steps": ["Step 1", "Step 2"]}
@@ -137,7 +146,7 @@ def seed_db():
     c.execute("INSERT OR REPLACE INTO playbooks VALUES (?,?,?,?,?,?)",
               ("pb-INC-001", "INC-001", json.dumps(STRATEGIES), 0, now.isoformat() + "Z", None))
 
-    # 5. Bias Index Scores
+    # 6. Bias Index Scores
     for m in MODELS:
         c.execute("INSERT OR REPLACE INTO bias_index_scores VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
                   (str(uuid.uuid4()), m["model_id"], now.isoformat() + "Z", 

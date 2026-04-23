@@ -37,14 +37,21 @@ class FairLensDB:
     
     def get_models(self) -> List[Dict]:
         if self.local:
+            # Local SQLite: Get latest audit for each model, joined with latest EBI score
             rows = self.conn.execute("""
-                SELECT ar.*, bis.enterprise_bias_index as ebi_score, bis.risk_tier
+                SELECT 
+                    ar.*, 
+                    bis.enterprise_bias_index as ebi_score, 
+                    bis.risk_tier,
+                    bis.percentile_rank
                 FROM audit_reports ar
-                LEFT JOIN (
-                    SELECT model_id, enterprise_bias_index, risk_tier,
-                           ROW_NUMBER() OVER (PARTITION BY model_id ORDER BY computed_at DESC) as rn
-                    FROM bias_index_scores
-                ) bis ON ar.model_id = bis.model_id AND bis.rn = 1
+                LEFT JOIN bias_index_scores bis ON ar.model_id = bis.model_id
+                WHERE ar.report_id IN (
+                    SELECT MAX(report_id) FROM audit_reports GROUP BY model_id
+                )
+                AND (bis.computed_at IS NULL OR bis.computed_at = (
+                    SELECT MAX(computed_at) FROM bias_index_scores WHERE model_id = ar.model_id
+                ))
                 ORDER BY ar.equity_score ASC
             """).fetchall()
             return [self._parse_model_row(r) for r in rows]
@@ -142,50 +149,111 @@ class FairLensDB:
             return True
         return False
 
-    def get_benchmarks(self) -> Dict:
-        # Static sector baselines as requested
-        return {
-            "financial": {
-                "demographic_parity_difference": {"p75": 0.09, "p90": 0.14},
-                "disparate_impact_ratio": {"p75": 0.83, "p90": 0.76},
-                "equalized_odds_difference": {"p75": 0.08, "p90": 0.13},
+    def get_benchmarks(self) -> List[Dict]:
+        # Industry baselines as expected by the frontend array map
+        return [
+            {
+                "sector": "Financial Services (BFSI)",
+                "count": 1240,
+                "avg_ebi": 68.4,
+                "target_ebi": "85+",
             },
-            "healthcare": {
-                "demographic_parity_difference": {"p75": 0.11, "p90": 0.17},
-                "equalized_odds_difference": {"p75": 0.10, "p90": 0.15},
-                "calibration_error": {"p75": 0.06, "p90": 0.09},
+            {
+                "sector": "Healthcare & Life Sciences",
+                "count": 840,
+                "avg_ebi": 62.1,
+                "target_ebi": "80+",
             },
-            "hr": {
-                "demographic_parity_difference": {"p75": 0.07, "p90": 0.12},
-                "disparate_impact_ratio": {"p75": 0.85, "p90": 0.78},
-                "equalized_odds_difference": {"p75": 0.06, "p90": 0.11},
+            {
+                "sector": "Technology & HR",
+                "count": 2100,
+                "avg_ebi": 71.8,
+                "target_ebi": "90+",
             }
-        }
+        ]
     
     def _parse_model_row(self, row) -> Dict:
         r = dict(row)
         r['protected_cols'] = json.loads(r.get('protected_cols') or '[]')
-        r['metrics'] = json.loads(r.get('metrics') or '{}')
+        metrics = json.loads(r.get('metrics') or '{}')
+        r['metrics'] = metrics
         r['trend'] = json.loads(r.get('trend') or '[]')
-        # Map DB 'passed' integer to boolean for frontend
+        r['ebi_score'] = r.get('ebi_score') or 0
         r['passed'] = bool(r['passed'])
+        
+        # Derive specific violations for the UI
+        violations = []
+        thresholds = {
+            "demographic_parity_difference": 0.1,
+            "equalized_odds_difference": 0.1,
+            "disparate_impact_ratio": 0.8,
+            "statistical_parity_difference": 0.1
+        }
+        
+        for metric, groups in metrics.items():
+            threshold = thresholds.get(metric, 0.1)
+            for group, val in groups.items():
+                is_ratio = "ratio" in metric
+                failed = val < threshold if is_ratio else val > threshold
+                if failed:
+                    violations.append({
+                        "col": "multiple", # Simplification for local mode
+                        "metric": metric,
+                        "value": val,
+                        "threshold": threshold
+                    })
+        r['violations'] = violations
         return r
     
     def _generate_mock_playbook(self, incident_id: str) -> Dict:
+        # Specialized analysis for the Maria demo case (INC-001)
+        if incident_id == "INC-001":
+            root_cause = (
+                "The model exhibits a critical disparity (0.21 DPD) in loan approval rates. "
+                "The primary driver is 'Feature Proxying': the feature 'zip_code' has a 0.84 correlation "
+                "with the protected attribute 'race', causing the model to unintentionally learn "
+                "historical redlining patterns."
+            )
+        else:
+            root_cause = "The model exhibits a critical disparity across protected demographic attributes."
+
         return {
             "playbook_id": f"pb-{incident_id[:8]}",
             "incident_id": incident_id,
             "human_approved": False,
+            "root_cause_analysis": root_cause,
+            "status": "Generated",
             "strategies": [
                 {
                     "title": "Reweighting Training Data",
                     "type": "Data Intervention",
                     "effort": "Medium",
                     "steps": [
-                        "Compute sample weights inversely proportional to group frequency",
-                        "Apply sklearn.utils.class_weight.compute_sample_weight",
-                        "Retrain model with sample_weight parameter",
-                        "Re-run fairlens.audit() and verify DPD drops below 0.10"
+                        "Compute group-wise selection rates across sensitive attributes.",
+                        "Apply inverse frequency weighting to the training objective.",
+                        "Re-train using 'sample_weight' parameter in sklearn/XGBoost.",
+                        "Verify that DPD drops below 0.10 while maintaining >95% of original AUC."
+                    ]
+                },
+                {
+                    "title": "Adversarial Debiasing",
+                    "type": "Model Architecture",
+                    "effort": "High",
+                    "steps": [
+                        "Initialize a GAN-based debiaser (fairlens.debias).",
+                        "Train an adversary network to predict race from the model's latent embeddings.",
+                        "Apply gradient reversal to minimize the adversary's performance.",
+                        "Ensure the model is unable to reconstruct protected attributes."
+                    ]
+                },
+                {
+                    "title": "Post-Hoc Threshold Optimization",
+                    "type": "Post-Processing",
+                    "effort": "Low",
+                    "steps": [
+                        "Calculate equalized odds thresholds for each demographic group.",
+                        "Adjust decision boundaries to ensure equal TPR across groups.",
+                        "Note: This may impact overall accuracy (Pareto-Frontier trade-off)."
                     ]
                 }
             ],
