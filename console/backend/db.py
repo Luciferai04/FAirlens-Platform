@@ -6,25 +6,54 @@ from typing import Optional, List, Dict
 from datetime import datetime
 
 LOCAL_MODE = os.getenv("LOCAL_MODE", "true").lower() == "true"
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 # Try relative to this file (Docker/Standalone) or root (Repo)
 DB_PATH = Path(__file__).parent / "local_data" / "fairlens.db"
 if not DB_PATH.exists():
     DB_PATH = Path(__file__).parent.parent.parent / "local_data" / "fairlens.db"
 
+class DBConnection:
+    def __init__(self, dsn: str):
+        self.is_postgres = dsn.startswith("postgres")
+        if self.is_postgres:
+            import psycopg2
+            from psycopg2.extras import RealDictCursor
+            # Fix postgres:// to postgresql:// if needed
+            if dsn.startswith("postgres://"):
+                dsn = dsn.replace("postgres://", "postgresql://", 1)
+            self.conn = psycopg2.connect(dsn, cursor_factory=RealDictCursor)
+        else:
+            self.conn = sqlite3.connect(dsn, check_same_thread=False)
+            self.conn.row_factory = sqlite3.Row
+
+    def execute(self, query: str, params=()):
+        if self.is_postgres:
+            query = query.replace("?", "%s")
+        cursor = self.conn.cursor()
+        cursor.execute(query, params)
+        return cursor
+
+    def commit(self):
+        self.conn.commit()
+
 class FairLensDB:
     """
     Unified data access layer.
-    LOCAL_MODE=true → SQLite
-    LOCAL_MODE=false → BigQuery (production)
+    Supports SQLite, PostgreSQL (via DATABASE_URL), and BigQuery.
     """
     
     def __init__(self):
         self.local = LOCAL_MODE
-        if self.local:
+        if DATABASE_URL:
+            self.local = True
+            self.conn = DBConnection(DATABASE_URL)
+            self._ensure_schema()
+        elif self.local:
             # Ensure path exists for local development
             DB_PATH.parent.mkdir(exist_ok=True, parents=True)
-            self.conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
-            self.conn.row_factory = sqlite3.Row
+            self.conn = DBConnection(str(DB_PATH))
+            self._ensure_schema()
         else:
             try:
                 from google.cloud import bigquery
@@ -32,8 +61,58 @@ class FairLensDB:
             except ImportError:
                 print("Warning: google-cloud-bigquery not installed. Falling back to local mode.")
                 self.local = True
-                self.conn = sqlite3.connect(str(DB_PATH), check_same_thread=False)
-                self.conn.row_factory = sqlite3.Row
+                self.conn = DBConnection(str(DB_PATH))
+                self._ensure_schema()
+
+    def _ensure_schema(self):
+        # Auto-create tables if missing
+        try:
+            self.conn.execute("SELECT 1 FROM audit_reports LIMIT 1")
+        except Exception:
+            self.conn.conn.rollback() if hasattr(self.conn.conn, "rollback") else None
+            # Initialize schema
+            from scripts.local_db import init_db
+            from scripts.seed_local_db import seed_db
+            
+            # For postgres, we need to run schema creation differently than executescript
+            if self.conn.is_postgres:
+                schema = """
+                CREATE TABLE IF NOT EXISTS audit_reports (
+                    report_id TEXT PRIMARY KEY, model_id TEXT NOT NULL, name TEXT, version TEXT,
+                    created_at TEXT NOT NULL, protected_cols TEXT, metrics TEXT,
+                    threshold_policy TEXT, passed INTEGER, triggered_by TEXT, provider TEXT,
+                    intended_purpose TEXT, equity_score REAL, violations_count INTEGER, trend TEXT
+                );
+                CREATE TABLE IF NOT EXISTS bias_incidents (
+                    incident_id TEXT PRIMARY KEY, model_id TEXT NOT NULL, model_name TEXT,
+                    model_category TEXT, detected_at TEXT NOT NULL, metric_name TEXT,
+                    sub_metric TEXT, current_value REAL, threshold REAL, severity TEXT,
+                    status TEXT, sensitive_col TEXT, playbook_id TEXT, resolved_at TEXT
+                );
+                CREATE TABLE IF NOT EXISTS bias_index_scores (
+                    score_id TEXT PRIMARY KEY, model_id TEXT NOT NULL, computed_at TEXT NOT NULL,
+                    metric_coverage_score REAL, severity_weighted_score REAL,
+                    temporal_stability_score REAL, intersectional_score REAL,
+                    remediation_velocity_score REAL, regulatory_alignment_score REAL,
+                    enterprise_bias_index REAL, risk_tier TEXT, percentile_rank REAL
+                );
+                CREATE TABLE IF NOT EXISTS playbooks (
+                    playbook_id TEXT PRIMARY KEY, incident_id TEXT NOT NULL, strategies TEXT,
+                    human_approved INTEGER DEFAULT 0, created_at TEXT, executed_at TEXT
+                );
+                CREATE TABLE IF NOT EXISTS compliance_reports (
+                    report_id TEXT PRIMARY KEY, model_id TEXT NOT NULL, model_name TEXT,
+                    framework TEXT, generated_at TEXT, kms_signed INTEGER DEFAULT 0,
+                    sha256_hash TEXT, pdf_path TEXT
+                );
+                """
+                cursor = self.conn.conn.cursor()
+                cursor.execute(schema)
+                self.conn.commit()
+                seed_db() # Seed using the normal DB abstraction
+            else:
+                init_db()
+                seed_db()
     
     def get_models(self) -> List[Dict]:
         if self.local:

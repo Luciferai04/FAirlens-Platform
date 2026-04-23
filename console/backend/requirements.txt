@@ -8,3 +8,4 @@ pyyaml==6.0.1
 reportlab==4.2.0
 pypdf==4.2.0
 # google-cloud-bigquery==3.21.0  # production only
+psycopg2-binary==2.9.9

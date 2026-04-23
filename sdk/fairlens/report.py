@@ -5,6 +5,7 @@ Provides serialization to JSON, HTML, and BigQuery, plus violation detection.
 """
 from __future__ import annotations
 import json
+import os
 import uuid
 from datetime import datetime, timezone
 from dataclasses import dataclass, field
@@ -50,10 +51,13 @@ class AuditReport:
                 if abs(val) > threshold:
                     # TRIGGER SOS SIGNAL (D12: REAL-TIME ALERTS)
                     try:
-                        with open(".sos_signal", "w") as f:
+                        # Use absolute path to ensure SOS Hub catches it
+                        sig_path = os.path.join(os.getcwd(), ".sos_signal")
+                        with open(sig_path, "w") as f:
                             f.write(self.model_id)
-                    except:
-                        pass
+                        print(f"\033[91m[SDK] SOS Signal Broadcasted to {sig_path}\033[0m")
+                    except Exception as e:
+                        print(f"[SDK] SOS Signal Error: {e}")
                     return True
         return False
 
