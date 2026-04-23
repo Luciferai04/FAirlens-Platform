@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModels, useIncidents } from "../api/hooks";
 import { SkeletonCard, SkeletonRow, ErrorBanner } from "../components/Skeleton";
@@ -51,7 +51,7 @@ export default function Dashboard() {
 
   // SOS NOTIFICATION LOGIC
   const [showSOS, setShowSOS] = useState(false);
-  const criticalIncident = apiIncidents?.find((inc: any) => inc.severity === 'Critical' && inc.status === 'Open');
+  const criticalIncident = Array.isArray(apiIncidents) ? apiIncidents.find((inc: any) => inc.severity === 'Critical' && inc.status === 'Open') : undefined;
 
   useEffect(() => {
     if (criticalIncident) {
@@ -61,9 +61,9 @@ export default function Dashboard() {
     }
   }, [criticalIncident]);
 
-  // Use API data, fall back to hardcoded
-  const models = apiModels ?? FALLBACK_MODELS as any[];
-  const incidents = apiIncidents ?? FALLBACK_INCIDENTS as any[];
+  // Use API data, fall back to hardcoded. Ensure they are arrays to prevent crashes.
+  const models = Array.isArray(apiModels) ? apiModels : FALLBACK_MODELS as any[];
+  const incidents = Array.isArray(apiIncidents) ? apiIncidents : FALLBACK_INCIDENTS as any[];
 
   const openIncidents = incidents.filter((i: any) => i.status === "Open" || i.status === "In-Progress");
   const avgEquity = models.length > 0
